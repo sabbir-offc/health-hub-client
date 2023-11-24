@@ -55,9 +55,10 @@ const Login = () => {
         display: "flex",
         justifyContent: "center",
         placeItems: "center",
+        py: 5,
       }}
     >
-      <Grid item xl={3} sm={5} md={4}>
+      <Grid item xl={3} md={4} sx={{ display: { xs: "none", md: "block" } }}>
         <Lottie animationData={LoginAnimation} />
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

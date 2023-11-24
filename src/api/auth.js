@@ -8,12 +8,17 @@ export const getToken = async (email) => {
 }
 
 // Save user data in database
-export const saveUser = async (user) => {
+export const saveUser = async (user, userInfo) => {
     const currentUser = {
-        email: user.email,
-        role: 'admin',
+        name: user?.displayName,
+        email: user?.email,
+        role: 'patient',
         status: 'active',
+        upazilla: userInfo?.upazilla,
+        district: userInfo?.district,
+        blood: userInfo?.blood
     }
+    console.log(currentUser)
     const { data } = await axiosSecure.put(`/users/${user?.email}`, currentUser)
 
     return data

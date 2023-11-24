@@ -1,8 +1,8 @@
 import Avatar from "@mui/material/Avatar";
-import LoginAnimation from "../../../public/Animation/login.json";
+import DoctorAnimation from "../../../public/Animation/doctor.json";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -33,6 +33,7 @@ const Register = () => {
   const [selectedImg, setSelectedImg] = useState(undefined);
   const [upazilla, setUpazilla] = useState("Savar");
   const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+  const navigate = useNavigate();
 
   //user info
   const { createUser, updateUserProfile, loading, setLoading } = useAuth();
@@ -56,16 +57,27 @@ const Register = () => {
     }
     setPassErr(null);
 
+    const userInfo = {
+      district,
+      upazilla,
+      blood,
+    };
+    const toastId = toast.loading("Account Creating...");
     try {
-      const toastId = toast.loading("Account Creating...");
+      setLoading(true);
       const { data } = await imageUpload(selectedImg);
       const result = await createUser(email, password);
       await updateUserProfile(name, data?.display_url);
-      const dbResponse = await saveUser(result?.user);
+      console.log(result);
+
+      const dbResponse = await saveUser(result?.user, userInfo);
+      console.log("object", result);
       if (dbResponse.acknowledged) {
         toast.success("Account Created Successfully", { id: toastId });
       }
+      navigate("/");
     } catch (error) {
+      toast.error(error.message, { id: toastId });
       console.log(error);
     } finally {
       setLoading(false);
@@ -90,7 +102,7 @@ const Register = () => {
 
   return (
     <Grid
-      //   component="main"
+      component="main"
       container
       sx={{
         display: "flex",
@@ -99,8 +111,8 @@ const Register = () => {
         placeItems: "center",
       }}
     >
-      <Grid item xl={3} sm={5} md={4}>
-        <Lottie animationData={LoginAnimation} />
+      <Grid item xl={4} md={4} sx={{ display: { xs: "none", md: "block" } }}>
+        <Lottie animationData={DoctorAnimation} />
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
@@ -301,7 +313,7 @@ const Register = () => {
                   margin="normal"
                   fullWidth
                   name="confirmPassword"
-                  label="confirmPassword"
+                  label="Confirm Password"
                   type="password"
                   id="confirmPassword"
                 />
@@ -315,11 +327,6 @@ const Register = () => {
             {passErr && (
               <Typography variant="span" color="red">
                 {passErr}
-              </Typography>
-            )}
-            {errors?.confirmPassword?.type === "minLength" && (
-              <Typography variant="span" color="red">
-                Password must be greater than 6 characterrs
               </Typography>
             )}
             <Button

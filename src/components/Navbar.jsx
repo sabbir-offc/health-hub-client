@@ -58,8 +58,8 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar
-            alt="Remy Sharp"
-            src="../../public/logo.png"
+            alt="Logo"
+            src="/logo.png"
             sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
           />
 
@@ -72,7 +72,7 @@ const Navbar = () => {
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
+                fontFamily: "roboto",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
                 color: "inherit",
@@ -122,7 +122,11 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <Avatar alt="Remy Sharp" src="/logo.png" sx={{ mr: 1 }} />
+          <Avatar
+            alt="Remy Sharp"
+            src="/logo.png"
+            sx={{ display: { xs: "flex", md: "none" } }}
+          />
           <Typography
             variant="h5"
             noWrap
