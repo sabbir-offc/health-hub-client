@@ -10,6 +10,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import AuthProvider from "./Providers/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <SiteTheme>
         <AuthProvider>
           <RouterProvider router={router} />
+          <Toaster />
         </AuthProvider>
       </SiteTheme>
     </HelmetProvider>

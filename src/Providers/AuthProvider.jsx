@@ -11,11 +11,12 @@ import {
 import PropTypes from "prop-types";
 
 import auth from "../Firebase/firebase.config";
+import { clearCookie, getToken } from "../api/auth";
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -47,8 +48,14 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("CurrentUser-->", currentUser);
-      setLoading(false);
+      if (currentUser) {
+        const userInfo = { email: currentUser.email };
+        getToken(userInfo);
+        setLoading(false);
+      } else {
+        clearCookie();
+        setLoading(false);
+      }
     });
     return () => {
       return unsubscribe();

@@ -16,26 +16,62 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { ImSpinner5 } from "react-icons/im";
+import useAuth from "../../hooks/useAuth";
+//json file for districts and upazillas
 import districts from "../../../public/districts.json";
 import upazillas from "../../../public/upazilla.json";
+import { imageUpload } from "../../api/imageUpload";
+import { saveUser } from "../../api/auth";
+import toast from "react-hot-toast";
 const Register = () => {
   const [blood, setBlood] = useState("A+");
   const [district, setDistrict] = useState("Dhaka");
   const [imgBtnText, setImgBtnText] = useState("Upload Your Image");
+  const [passErr, setPassErr] = useState("");
+  const [selectedImg, setSelectedImg] = useState(undefined);
   const [upazilla, setUpazilla] = useState("Savar");
   const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const name = form.name.value;
-    const image = form.image?.files[0];
 
-    const userInfo = {
-      name,
-      image,
-    };
-    console.log(userInfo);
+  //user info
+  const { createUser, updateUserProfile, loading, setLoading } = useAuth();
+
+  //hook form
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const name = data.name;
+    const email = data.email;
+    const password = data.password;
+    const confirmPassword = data.confirmPassword;
+
+    if (password !== confirmPassword) {
+      return setPassErr("Password Doesn't match");
+    }
+    setPassErr(null);
+
+    try {
+      const toastId = toast.loading("Account Creating...");
+      const { data } = await imageUpload(selectedImg);
+      const result = await createUser(email, password);
+      await updateUserProfile(name, data?.display_url);
+      const dbResponse = await saveUser(result?.user);
+      if (dbResponse.acknowledged) {
+        toast.success("Account Created Successfully", { id: toastId });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+  //fileUpload
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -84,120 +120,223 @@ const Register = () => {
           </Typography>
           <Box
             component="form"
-            noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Full Name"
+            <Controller
               name="name"
-              autoFocus
-              autoComplete="name"
-            />
-            <Button
-              component="label"
-              required
-              fullWidth
-              sx={{
-                my: 2,
-              }}
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-            >
-              {imgBtnText}
-              <VisuallyHiddenInput
-                type="file"
-                name="image"
-                required
-                onChange={(e) => handleImageTxt(e.target.files[0])}
-              />
-            </Button>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Blood Group</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                value={blood}
-                label="Blood Group"
-                onChange={(e) => setBlood(e.target.value)}
-              >
-                {bloodGroups.map((gc) => (
-                  <MenuItem key={gc} value={gc}>
-                    {gc}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl fullWidth sx={{ my: 2 }}>
-              <InputLabel id="demo-simple-select-label">Districts</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                value={district}
-                label="Districts"
-                onChange={(e) => setDistrict(e.target.value)}
-              >
-                {districts.map((district) => (
-                  <MenuItem key={district.id} value={district.name}>
-                    {district.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl fullWidth sx={{ my: 2 }}>
-              <InputLabel id="demo-simple-select-label">Upazilla</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                value={upazilla}
-                label="Upazilla"
-                onChange={(e) => setUpazilla(e.target.value)}
-              >
-                {upazillas.map((upazilla) => (
-                  <MenuItem key={upazilla.id} value={upazilla.name}>
-                    {upazilla.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="confirm_password"
-              label="Confirm Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Full Name"
+                  name="name"
+                  autoFocus
+                  autoComplete="name"
+                />
+              )}
             />
 
+            <Controller
+              name="image"
+              control={control}
+              defaultValue={selectedImg}
+              render={({ field }) => (
+                <Button
+                  component="label"
+                  fullWidth
+                  sx={{
+                    my: 2,
+                  }}
+                  variant="contained"
+                  startIcon={<CloudUploadIcon />}
+                >
+                  {imgBtnText}
+                  <VisuallyHiddenInput
+                    type="file"
+                    {...field}
+                    required={!selectedImg}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files[0];
+                      handleImageTxt(selectedFile);
+                      setSelectedImg(selectedFile);
+                    }}
+                  />
+                </Button>
+              )}
+            />
+
+            <Controller
+              name="blood"
+              control={control}
+              defaultValue={blood}
+              render={({ field }) => (
+                <FormControl fullWidth sx={{ my: 2 }}>
+                  <InputLabel id="blood">Blood Groups</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="blood"
+                    value={blood}
+                    label="Blood Groups"
+                    onChange={(e) => setBlood(e.target.value)}
+                  >
+                    {bloodGroups.map((blood) => (
+                      <MenuItem key={blood} value={blood}>
+                        {blood}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+
+            <Controller
+              name="district"
+              control={control}
+              defaultValue={district}
+              render={({ field }) => (
+                <FormControl fullWidth sx={{ my: 2 }}>
+                  <InputLabel id="district">Districts</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="district"
+                    value={district}
+                    label="Districts"
+                    onChange={(e) => setDistrict(e.target.value)}
+                  >
+                    {districts.map((district) => (
+                      <MenuItem key={district.id} value={district.name}>
+                        {district.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+            <Controller
+              name="upazilla"
+              control={control}
+              defaultValue={upazilla}
+              render={({ field }) => (
+                <FormControl fullWidth sx={{ my: 2 }}>
+                  <InputLabel id="upazilla">Upazilla</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="upazilla"
+                    value={upazilla}
+                    label="Upazilla"
+                    onChange={(e) => setUpazilla(e.target.value)}
+                  >
+                    {upazillas.map((upazilla) => (
+                      <MenuItem key={upazilla.id} value={upazilla.name}>
+                        {upazilla.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              )}
+            />
+
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  {...register("password", { required: true, minLength: 6 })}
+                  margin="normal"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              )}
+            />
+            {errors?.password?.type === "required" && (
+              <Typography variant="span" color="red">
+                Password is required.
+              </Typography>
+            )}
+            {errors?.password?.type === "minLength" && (
+              <Typography variant="span" color="red">
+                Password must be greater than 6 characterrs
+              </Typography>
+            )}
+            <Controller
+              name="confirmPassword"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  {...register("confirmPassword", {
+                    required: true,
+                    minLength: 6,
+                  })}
+                  margin="normal"
+                  fullWidth
+                  name="confirmPassword"
+                  label="confirmPassword"
+                  type="password"
+                  id="confirmPassword"
+                />
+              )}
+            />
+            {errors?.confirmPassword?.type === "required" && (
+              <Typography variant="span" color="red">
+                Password is required.
+              </Typography>
+            )}
+            {passErr && (
+              <Typography variant="span" color="red">
+                {passErr}
+              </Typography>
+            )}
+            {errors?.confirmPassword?.type === "minLength" && (
+              <Typography variant="span" color="red">
+                Password must be greater than 6 characterrs
+              </Typography>
+            )}
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Register
+              {loading ? (
+                <ImSpinner5
+                  id="spin"
+                  style={{ animation: "spin 1s linear infinite" }}
+                  size={23}
+                />
+              ) : (
+                "Register"
+              )}
             </Button>
             <Grid container>
               <Grid item>

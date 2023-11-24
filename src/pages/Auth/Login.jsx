@@ -1,31 +1,54 @@
 import Avatar from "@mui/material/Avatar";
 import LoginAnimation from "../../../public/Animation/login.json";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Lottie from "lottie-react";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
+import { ImSpinner5 } from "react-icons/im";
 
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const { loading, setLoading, signIn } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    const email = data.email;
+    const password = data.password;
+    try {
+      const toastId = toast.loading("Logging...");
+      await signIn(email, password)
+        .then(() => {
+          toast.success("Logged In Successfully", { id: toastId });
+          navigate("/");
+        })
+
+        .catch(() => {
+          toast.error("Login Failed", { id: toastId });
+        });
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Grid
-      //   component="main"
+      component="main"
       container
       sx={{
         minHeight: "90vh",
@@ -57,40 +80,65 @@ const Login = () => {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 1 }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              )}
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
+            <Controller
               name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  {...register("password", { required: true, minLength: 6 })}
+                  margin="normal"
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              )}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {errors?.password?.type === "required" && (
+              <Typography variant="span" color="red">
+                Password is required.
+              </Typography>
+            )}
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Login
+              {loading ? (
+                <ImSpinner5
+                  id="spin"
+                  style={{ animation: "spin 1s linear infinite" }}
+                  size={23}
+                />
+              ) : (
+                "Login"
+              )}
             </Button>
             <Grid container>
               <Grid item>

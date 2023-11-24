@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ImageListItem from "@mui/material/ImageListItem";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,11 +14,27 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 const pages = ["Home", "All Test"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
+  const settings = [
+    {
+      name: "Profile",
+      to: "/profile",
+    },
+    {
+      name: "Dashboard",
+      to: "/dashboard",
+    },
+    {
+      name: "Logout",
+      to: () => logOut(),
+    },
+  ];
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -41,20 +57,28 @@ const Navbar = () => {
     <AppBar color="secondary" position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <ImageListItem
-            sx={{
-              width: 60,
-              height: 60,
-              mr: 1,
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-              objectFit: "cover",
-              objectPosition: "center",
-            }}
-          >
-            <img src="../../public/logo.png" alt="" />
-          </ImageListItem>
+          <Avatar
+            alt="Remy Sharp"
+            src="../../public/logo.png"
+            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+          />
+
           <Box display="flex" justifyContent="center" mr={2}>
-            <Typography variant="h6" color="white">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
               Diagonstic{" "}
               <Typography variant="span" color="#1565C0">
                 Center
@@ -98,7 +122,7 @@ const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <Avatar alt="Remy Sharp" src="/logo.png" sx={{ mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -115,7 +139,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            DC
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -129,35 +153,46 @@ const Navbar = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src={user?.photoURL} />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((btn) => (
+                  <MenuItem key={btn.name} onClick={btn.to}>
+                    <Typography textAlign="center">{btn.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            <Typography variant="h5">
+              <NavLink
+                to="/login"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Login
+              </NavLink>
+            </Typography>
+          )}
         </Toolbar>
       </Container>
     </AppBar>
