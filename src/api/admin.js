@@ -8,14 +8,15 @@ export const uploadBanner = async (info) => {
 }
 
 //update isActive value;
-export const updateBannerStatus = (id, status) => {
-    const res = axiosSecure.patch(`/banners/${id}`, status);
-    return res
+export const updateBannerStatus = async (id, status) => {
+    const { data } = await axiosSecure.patch(`/banners/${id}`, status);
+    return data
 }
 
 
 //add test
-export const addTest = (testInfo) => {
-    const { data } = axiosSecure.post('/tests', testInfo);
+export const addTest = async (testInfo) => {
+    const { data } = await axiosSecure.post('/tests', testInfo);
+
     return data;
 }

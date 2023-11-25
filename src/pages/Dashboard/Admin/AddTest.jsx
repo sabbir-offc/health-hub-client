@@ -4,9 +4,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { useState } from "react";
@@ -14,11 +12,16 @@ import { Controller, useForm } from "react-hook-form";
 import { ImSpinner5 } from "react-icons/im";
 import toast from "react-hot-toast";
 import { imageUpload } from "../../../api/imageUpload";
-import { uploadBanner } from "../../../api/admin";
+import { addTest, uploadBanner } from "../../../api/admin";
+import { DayPicker } from "react-day-picker";
+import useAuth from "../../../hooks/useAuth";
 const AddTest = () => {
   const [imgBtnText, setImgBtnText] = useState("Upload Test Thumbnail Image");
   const [selectedImg, setSelectedImg] = useState(undefined);
   const [loading, setLoading] = useState(false);
+  const [selectedDate, setSelected] = useState(new Date());
+
+  const { user } = useAuth();
   //hook form
   const {
     register,
@@ -29,27 +32,29 @@ const AddTest = () => {
 
   const onSubmit = async (data) => {
     const title = data.title;
-    const description = data.description;
-    const coupon = data.coupon;
-    const discountRate = data.discountRate;
+    const details = data.details;
+    const price = data.price;
+    const slots = data.slots;
     try {
       setLoading(true);
       const { data } = await imageUpload(selectedImg);
-      const bannerInfo = {
+      const testInfo = {
         title,
         image: data?.display_url,
-        description,
-        coupon,
-        isActive: false,
-        discountRate: parseInt(discountRate),
+        details,
+        date: selectedDate,
+        price,
+        slots,
+        author: user?.displayName,
+        authorImg: user?.photoURL,
       };
 
-      const res = await uploadBanner(bannerInfo).then();
-      if (res.acknowledged) {
-        toast.success("Banner Uploaded Successfully");
+      const dbResponse = await addTest(testInfo);
+      if (dbResponse.acknowledged) {
+        toast.success("Test Added Successfully");
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -212,55 +217,47 @@ const AddTest = () => {
               </Grid>
               <Grid item width={"full"}>
                 <Controller
-                  name="date"
+                  name="slots"
                   control={control}
+                  defaultValue=""
                   render={({ field }) => (
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker
-                        {...field}
-                        {...register("date", { required: true })}
-                        fullWidth
-                        sx={{ mt: 1, width: "full" }}
-                        minDate={() => new Date()}
-                        label={"Select Date"}
-                      />
-                    </LocalizationProvider>
+                    <TextField
+                      {...field}
+                      {...register("slots", { required: true })}
+                      margin="normal"
+                      name="slots"
+                      fullWidth
+                      label="Test slots"
+                      type="number"
+                      id="slots"
+                    />
                   )}
                 />
-                {errors?.date?.type === "required" && (
+                {errors?.slots?.type === "required" && (
                   <Typography
                     variant="h6"
                     color="red"
-                    fontSize={"16px"}
                     fontWeight={400}
+                    fontSize={"16px"}
                   >
-                    Date Is required.
+                    Slots Is required.
                   </Typography>
                 )}
               </Grid>
             </Grid>
             <Controller
-              name="slots"
+              name="date"
               control={control}
-              defaultValue=""
               render={({ field }) => (
-                <TextField
+                <DayPicker
                   {...field}
-                  {...register("slots", { required: true })}
-                  margin="normal"
-                  name="slots"
-                  fullWidth
-                  label="Test slots"
-                  type="number"
-                  id="slots"
+                  {...register("date")}
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelected}
                 />
               )}
             />
-            {errors?.slots?.type === "required" && (
-              <Typography variant="span" color="red">
-                Slots Is required.
-              </Typography>
-            )}
 
             <Button
               type="submit"
