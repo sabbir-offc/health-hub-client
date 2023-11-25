@@ -71,7 +71,7 @@ const Register = () => {
       console.log(result);
 
       const dbResponse = await saveUser(result?.user, userInfo);
-      console.log("object", result);
+
       if (dbResponse.acknowledged) {
         toast.success("Account Created Successfully", { id: toastId });
       }

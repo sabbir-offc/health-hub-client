@@ -3,7 +3,6 @@ import {
   Box,
   Container,
   Grid,
-  ImageList,
   List,
   ListItem,
   ListItemText,

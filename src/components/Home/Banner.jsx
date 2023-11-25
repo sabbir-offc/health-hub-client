@@ -1,19 +1,23 @@
-import {
-  Button,
-  Container,
-  Grid,
-  ImageListItem,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import demonBanner from "/public/demoBanner.jpg";
+import useBanner from "../../hooks/useBanner";
+import { useEffect, useState } from "react";
 const Banner = () => {
+  const [banner, setBanner] = useState(null);
+  const { banners, isLoading } = useBanner();
+  isLoading && <p>Loading...</p>;
+  useEffect(() => {
+    if (banners) {
+      banners.find((banner) => banner.isActive === true && setBanner(banner));
+    }
+  }, [banners]);
+  console.log(banner);
+
   return (
     <Grid
       id="Home"
       sx={{
-        maxHeight: "85vh",
-        py: 28,
-        // backgroundImage: `linear-gradient(90deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2)), url(${demonBanner})`,
+        py: 20,
         backgroundPosition: "center",
         backgroundSize: "cover",
       }}
@@ -28,10 +32,16 @@ const Banner = () => {
           <Grid item xs={12} md={6} lg={6} sx={{ flex: 1 }}>
             {/* Adjust the styling as needed */}
             <Typography sx={{ fontWeight: 600 }} variant="h2" color="black">
-              Trusted Diagnostic Center
+              {banner ? banner?.title : "Trusted Diagnostic Center"}
             </Typography>
-            <Typography sx={{ fontWeight: 400 }} variant="p" color="black">
-              Welcome to the biggest Diagnostic Center in Bangladesh.
+            <Typography
+              sx={{ fontWeight: 400, mr: 2 }}
+              variant="p"
+              color="black"
+            >
+              {banner
+                ? banner?.description
+                : "Welcome to the biggest Diagnostic Center in Bangladesh."}
             </Typography>
             <Grid container sx={{ mt: 2 }} alignItems="center">
               <Button
@@ -39,16 +49,16 @@ const Banner = () => {
                 variant="contained"
                 size="medium"
               >
-                HAPPY22
+                {banner ? banner?.coupon : "HELLO12"}
               </Button>
               <Typography variant="span" color="#1565C0">
-                20% Discount
+                {banner ? banner?.discountRate : 20}% Discount
               </Typography>
             </Grid>
           </Grid>
           <Grid item xs={12} md={6} lg={6} sx={{ flex: 1 }}>
             <img
-              src={demonBanner}
+              src={banner ? banner?.image : demonBanner}
               alt=""
               style={{ width: "100%", height: "100%" }}
             />

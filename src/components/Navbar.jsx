@@ -1,5 +1,4 @@
 import { Link, NavLink } from "react-router-dom";
-import ImageListItem from "@mui/material/ImageListItem";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 
@@ -182,7 +180,12 @@ const Navbar = () => {
               >
                 {settings.map((btn) => (
                   <MenuItem key={btn.name} onClick={btn.to}>
-                    <Typography textAlign="center">{btn.name}</Typography>
+                    <Link
+                      to={btn.to}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <Typography textAlign="center">{btn.name}</Typography>
+                    </Link>
                   </MenuItem>
                 ))}
               </Menu>

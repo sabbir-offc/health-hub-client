@@ -3,6 +3,10 @@ import Main from "../Layout/Main";
 import Home from "../pages/Home/Home";
 import Register from "../pages/Auth/Register";
 import Login from "../pages/Auth/Login";
+import DashboardLayout from "../Layout/Dashboard/DashboardLayout";
+import AddBanenr from "../pages/Dashboard/Admin/AddBanner";
+import BannerList from "../pages/Dashboard/Admin/BannerList";
+import AddTest from "../pages/Dashboard/Admin/AddTest";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +25,25 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      //admin routes
+      {
+        path: "add-banner",
+        element: <AddBanenr />,
+      },
+      {
+        path: "banners",
+        element: <BannerList />,
+      },
+      {
+        path: "add-test",
+        element: <AddTest />,
+      },
+    ],
   },
 ]);
 
