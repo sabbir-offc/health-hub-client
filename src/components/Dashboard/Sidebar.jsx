@@ -18,6 +18,7 @@ import { NavLink } from "react-router-dom";
 import { PiFlagBannerFill, PiUser, PiUsersThreeBold } from "react-icons/pi";
 
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+import { TbReportMedical } from "react-icons/tb";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { Home, Logout } from "@mui/icons-material";
@@ -48,6 +49,11 @@ const Sidebar = () => {
       icon: <PostAddIcon />,
       name: "Add Test",
       to: "/dashboard/add-test",
+    },
+    {
+      icon: <TbReportMedical size={24} />,
+      name: "All Tests",
+      to: "/dashboard/all-tests",
     },
     {
       icon: <ImportContactsIcon />,

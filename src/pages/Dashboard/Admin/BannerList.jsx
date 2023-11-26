@@ -49,7 +49,10 @@ const BannerList = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: "auto" }} aria-label="simple table">
+      <Table
+        sx={{ minWidth: "auto", overflowX: "auto" }}
+        aria-label="simple table"
+      >
         <TableHead>
           <TableRow>
             <TableCell>Banner Image</TableCell>

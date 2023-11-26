@@ -21,6 +21,16 @@ export const addTest = async (testInfo) => {
 
     return data;
 }
+//get all tests
+export const getAllTests = async () => {
+    const { data } = await axiosSecure('/tests');
+    return data;
+}
+
+export const deleteTest = async (id) => {
+    const { data } = axiosSecure.delete(`/tests/${id}`);
+    return data;
+}
 
 //get district
 export const getDistricts = async () => {
@@ -47,3 +57,4 @@ export const updateUserRole = async (id, role) => {
     return data
 
 }
+

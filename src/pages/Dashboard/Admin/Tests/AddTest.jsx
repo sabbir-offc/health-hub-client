@@ -11,10 +11,10 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ImSpinner5 } from "react-icons/im";
 import toast from "react-hot-toast";
-import { imageUpload } from "../../../api/imageUpload";
-import { addTest, uploadBanner } from "../../../api/admin";
+import { imageUpload } from "../../../../api/imageUpload";
+import { addTest, uploadBanner } from "../../../../api/admin";
 import { DayPicker } from "react-day-picker";
-import useAuth from "../../../hooks/useAuth";
+import useAuth from "../../../../hooks/useAuth";
 const AddTest = () => {
   const [imgBtnText, setImgBtnText] = useState("Upload Test Thumbnail Image");
   const [selectedImg, setSelectedImg] = useState(undefined);

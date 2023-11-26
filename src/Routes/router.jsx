@@ -6,11 +6,12 @@ import Login from "../pages/Auth/Login";
 import DashboardLayout from "../Layout/Dashboard/DashboardLayout";
 import AddBanenr from "../pages/Dashboard/Admin/AddBanner";
 import BannerList from "../pages/Dashboard/Admin/BannerList";
-import AddTest from "../pages/Dashboard/Admin/AddTest";
 import PrivateRoute from "./PrivateRoutes";
 import AdminRoutes from "./AdminRoutes";
 import Profile from "../pages/Dashboard/Common/Profile";
 import Users from "../pages/Dashboard/Admin/Users";
+import AddTest from "../pages/Dashboard/Admin/Tests/AddTest";
+import AllTests from "../pages/Dashboard/Admin/Tests/AllTests";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoutes>
               <AddTest />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-tests",
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <AllTests />
             </AdminRoutes>
           </PrivateRoute>
         ),
