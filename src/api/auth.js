@@ -12,7 +12,7 @@ export const saveUser = async (user, userInfo) => {
     const currentUser = {
         name: user?.displayName,
         email: user?.email,
-        role: 'patient',
+        role: 'user',
         status: 'active',
         image: userInfo?.image,
         upazilla: userInfo?.upazilla,

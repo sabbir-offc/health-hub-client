@@ -35,7 +35,7 @@ const UpdateInfoForm = ({ setShow }) => {
   const [loading, setLoading] = useState(false);
   const { handleSubmit, control } = useForm();
   const { userInfo } = useUserInfo();
-  const [up, setUp] = useState(null);
+
   if (isLoading) return <Loader />;
 
   const VisuallyHiddenInput = styled("input")({
@@ -59,17 +59,17 @@ const UpdateInfoForm = ({ setShow }) => {
 
     try {
       setLoading(true);
-      //uploading user image
+      let imageUrl;
+
       if (selectedImg) {
         const { data } = await imageUpload(selectedImg);
-        setUp(data.display_url);
-        console.log(data.display_url);
+        imageUrl = data?.display_url;
       } else {
-        setUp(user?.photoURL);
+        imageUrl = userInfo?.image;
       }
 
       //update user name and image
-      await updateUserProfile(name, up);
+      await updateUserProfile(name, imageUrl);
 
       //update user info in database
       const updatedInfo = {

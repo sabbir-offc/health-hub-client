@@ -12,6 +12,8 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import Users from "../pages/Dashboard/Admin/Users";
 import AddTest from "../pages/Dashboard/Admin/Tests/AddTest";
 import AllTests from "../pages/Dashboard/Admin/Tests/AllTests";
+import UpdateTest from "../pages/Dashboard/Admin/Tests/UpdateTest";
+import { singleTest } from "../api/admin";
 
 const router = createBrowserRouter([
   {
@@ -80,6 +82,17 @@ const router = createBrowserRouter([
             </AdminRoutes>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "update-test/:id",
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <UpdateTest />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => singleTest(params.id),
       },
       {
         path: "all-users",

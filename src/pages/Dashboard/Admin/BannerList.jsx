@@ -21,7 +21,7 @@ const BannerList = () => {
     try {
       setLoading(true);
       const res = await updateBannerStatus(id, { isActive });
-      if (res.modifiedCount) {
+      if (res.modifiedCount > 0) {
         refetch();
         toast.success("Banener Active successfully");
       }
@@ -36,7 +36,7 @@ const BannerList = () => {
     try {
       setLoading(true);
       const res = await updateBannerStatus(id, { isActive });
-      if (res.modifiedCount) {
+      if (res.modifiedCount > 0) {
         refetch();
         toast.success("Banener Disable successfully");
       }

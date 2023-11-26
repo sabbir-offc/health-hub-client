@@ -12,7 +12,7 @@ import { Controller, useForm } from "react-hook-form";
 import { ImSpinner5 } from "react-icons/im";
 import toast from "react-hot-toast";
 import { imageUpload } from "../../../../api/imageUpload";
-import { addTest, uploadBanner } from "../../../../api/admin";
+import { addTest } from "../../../../api/admin";
 import { DayPicker } from "react-day-picker";
 import useAuth from "../../../../hooks/useAuth";
 const AddTest = () => {

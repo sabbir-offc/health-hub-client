@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Avatar, Button, TableCell, TableRow } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const AllTestList = ({ test, handleDelete }) => {
   const { title, image, price, slots, _id, date } = test;
@@ -20,7 +21,12 @@ const AllTestList = ({ test, handleDelete }) => {
       <TableCell align="right">{slots}</TableCell>
       <TableCell align="right">{modifiedDate}</TableCell>
       <TableCell align="right">
-        <Button variant="contained">Update</Button>
+        <Link
+          to={`/dashboard/update-test/${_id}`}
+          style={{ textTransform: "none" }}
+        >
+          <Button variant="contained">Update</Button>
+        </Link>
       </TableCell>
       <TableCell align="right">
         <Button

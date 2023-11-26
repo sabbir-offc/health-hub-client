@@ -26,9 +26,21 @@ export const getAllTests = async () => {
     const { data } = await axiosSecure('/tests');
     return data;
 }
-
+//delete a single test
 export const deleteTest = async (id) => {
-    const { data } = axiosSecure.delete(`/tests/${id}`);
+    const { data } = await axiosSecure.delete(`/tests/${id}`);
+    return data;
+}
+
+//get single test details
+export const singleTest = async (id) => {
+    const { data } = await axiosSecure(`/tests/${id}`);
+    return data;
+}
+
+//update a single test details 
+export const updateTestDetails = async (id, updatedData) => {
+    const { data } = await axiosSecure.put(`/test/update/${id}`, updatedData);
     return data;
 }
 
