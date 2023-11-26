@@ -1,10 +1,9 @@
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
@@ -16,19 +15,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { PiFlagBannerFill } from "react-icons/pi";
+import { PiFlagBannerFill, PiUser, PiUsersThreeBold } from "react-icons/pi";
 
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import PostAddIcon from "@mui/icons-material/PostAdd";
+import { Home, Logout } from "@mui/icons-material";
+import useAuth from "../../hooks/useAuth";
 const Sidebar = () => {
+  const { user, logOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const drawerWidth = 240;
 
-  const menu = [
+  const adminMenu = [
     {
       icon: <AddPhotoAlternateIcon />,
       name: "Add Banner",
@@ -49,6 +51,11 @@ const Sidebar = () => {
       name: "Add Appoinment",
       to: "/dashboard/add-appoinment",
     },
+    {
+      icon: <PiUsersThreeBold />,
+      name: "All Users",
+      to: "/dashboard/all-users",
+    },
   ];
 
   const drawer = (
@@ -56,7 +63,7 @@ const Sidebar = () => {
       <Toolbar />
       <Divider />
       <List>
-        {menu.map((text) => (
+        {adminMenu.map((text) => (
           <NavLink
             key={text.to}
             to={text.to}
@@ -79,16 +86,40 @@ const Sidebar = () => {
       </List>
       <Divider />
       <List>
-        {["All Users", "Profile", "Log out"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>
+          <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <Home />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText>Home</ListItemText>
             </ListItemButton>
           </ListItem>
-        ))}
+        </NavLink>
+        <NavLink
+          to="/dashboard/profile"
+          className={({ isActive }) =>
+            isActive ? "active-lnk" : "disactive-lnk"
+          }
+        >
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <PiUser />
+              </ListItemIcon>
+              <ListItemText>Profile</ListItemText>
+            </ListItemButton>
+          </ListItem>
+        </NavLink>
+
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => logOut()}>
+            <ListItemIcon>
+              <Logout />
+            </ListItemIcon>
+            <ListItemText>Log out</ListItemText>
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );

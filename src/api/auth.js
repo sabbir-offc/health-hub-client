@@ -24,6 +24,12 @@ export const saveUser = async (user, userInfo) => {
     return data
 }
 
+//update userInfo 
+export const updateUserInfo = async (userInfo, id) => {
+    const { data } = await axiosSecure.put(`/users/update/${id}`, userInfo);
+    return data
+}
+
 // Clear token from browser
 export const clearCookie = async () => {
     const { data } = await axiosSecure.get('/logout')

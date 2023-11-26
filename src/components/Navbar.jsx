@@ -22,15 +22,11 @@ const Navbar = () => {
   const settings = [
     {
       name: "Profile",
-      to: "/profile",
+      to: "/dashboard/profile",
     },
     {
       name: "Dashboard",
       to: "/dashboard",
-    },
-    {
-      name: "Logout",
-      to: () => logOut(),
     },
   ];
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -179,7 +175,7 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((btn) => (
-                  <MenuItem key={btn.name} onClick={btn.to}>
+                  <MenuItem key={btn.name}>
                     <Link
                       to={btn.to}
                       style={{ textDecoration: "none", color: "black" }}
@@ -188,6 +184,11 @@ const Navbar = () => {
                     </Link>
                   </MenuItem>
                 ))}
+                <MenuItem onClick={() => logOut()}>
+                  <Typography textAlign="center" fontSize={"16px"}>
+                    Log out
+                  </Typography>
+                </MenuItem>
               </Menu>
             </Box>
           ) : (

@@ -3,7 +3,7 @@ import LoginAnimation from "../../../public/Animation/login.json";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -14,9 +14,12 @@ import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner5 } from "react-icons/im";
+import WebTitle from "../../components/WebTitle/WebTitle";
 
 const Login = () => {
   const { loading, setLoading, signIn } = useAuth();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -33,7 +36,7 @@ const Login = () => {
       await signIn(email, password)
         .then(() => {
           toast.success("Logged In Successfully", { id: toastId });
-          navigate("/");
+          navigate(from, { replace: true });
         })
 
         .catch(() => {
@@ -47,111 +50,116 @@ const Login = () => {
   };
 
   return (
-    <Grid
-      component="main"
-      container
-      sx={{
-        minHeight: "90vh",
-        display: "flex",
-        justifyContent: "center",
-        placeItems: "center",
-        py: 5,
-      }}
-    >
-      <Grid item xl={3} md={4} sx={{ display: { xs: "none", md: "block" } }}>
-        <Lottie animationData={LoginAnimation} />
-      </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
+    <>
+      <WebTitle title={"Login"} />
+      <Grid
+        component="main"
+        container
+        sx={{
+          minHeight: "90vh",
+          display: "flex",
+          justifyContent: "center",
+          placeItems: "center",
+          py: 5,
+        }}
+      >
+        <Grid item xl={3} md={4} sx={{ display: { xs: "none", md: "block" } }}>
+          <Lottie animationData={LoginAnimation} />
+        </Grid>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}
-          >
-            <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  {...register("password", { required: true, minLength: 6 })}
-                  margin="normal"
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                />
-              )}
-            />
-            {errors?.password?.type === "required" && (
-              <Typography variant="span" color="red">
-                Password is required.
-              </Typography>
-            )}
+            sx={{
+              my: 8,
+              mx: 4,
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Login
+            </Typography>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit(onSubmit)}
+              sx={{ mt: 1 }}
             >
-              {loading ? (
-                <ImSpinner5
-                  id="spin"
-                  style={{ animation: "spin 1s linear infinite" }}
-                  size={23}
-                />
-              ) : (
-                "Login"
-              )}
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Typography>
-                  <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    {...register("password", { required: true, minLength: 6 })}
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                )}
+              />
+              {errors?.password?.type === "required" && (
+                <Typography variant="span" color="red">
+                  Password is required.
                 </Typography>
+              )}
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {loading ? (
+                  <ImSpinner5
+                    id="spin"
+                    style={{ animation: "spin 1s linear infinite" }}
+                    size={23}
+                  />
+                ) : (
+                  "Login"
+                )}
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Typography>
+                    <Link to="/register">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

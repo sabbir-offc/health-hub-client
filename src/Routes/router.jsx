@@ -7,6 +7,11 @@ import DashboardLayout from "../Layout/Dashboard/DashboardLayout";
 import AddBanenr from "../pages/Dashboard/Admin/AddBanner";
 import BannerList from "../pages/Dashboard/Admin/BannerList";
 import AddTest from "../pages/Dashboard/Admin/AddTest";
+import PrivateRoute from "./PrivateRoutes";
+import AdminRoutes from "./AdminRoutes";
+import Profile from "../pages/Dashboard/Common/Profile";
+import Users from "../pages/Dashboard/Admin/Users";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,20 +33,62 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       //admin routes
       {
         path: "add-banner",
-        element: <AddBanenr />,
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <AddBanenr />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
       },
       {
         path: "banners",
-        element: <BannerList />,
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <BannerList />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
       },
       {
         path: "add-test",
-        element: <AddTest />,
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <AddTest />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoutes>
+              <Users />
+            </AdminRoutes>
+          </PrivateRoute>
+        ),
+      },
+
+      //common routes
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
     ],
   },

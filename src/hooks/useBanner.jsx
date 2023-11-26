@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { axiosPublic } from "./axiosPublic.js";
+import { axiosPublic } from "./useAxiosPublic";
 
 const useBanner = () => {
   const {
@@ -9,7 +9,7 @@ const useBanner = () => {
   } = useQuery({
     queryKey: ["banners"],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/banners");
+      const { data } = await axiosPublic("/banners");
       return data;
     },
   });

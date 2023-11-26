@@ -1,4 +1,5 @@
 import axiosSecure from "."
+import { axiosPublic } from "../hooks/useAxiosPublic";
 
 //upload banner
 export const uploadBanner = async (info) => {
@@ -18,5 +19,23 @@ export const updateBannerStatus = async (id, status) => {
 export const addTest = async (testInfo) => {
     const { data } = await axiosSecure.post('/tests', testInfo);
 
+    return data;
+}
+
+//get district
+export const getDistricts = async () => {
+    const { data } = await axiosPublic('/districts');
+    return data;
+}
+
+//get all users 
+export const getAllUsers = async () => {
+    const { data } = await axiosSecure('/users');
+    return data
+}
+
+//update user status 
+export const updateUserStatus = async (id, status) => {
+    const { data } = await axiosSecure.patch(`/user/status/${id}`, { status });
     return data;
 }
