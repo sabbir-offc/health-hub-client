@@ -9,7 +9,7 @@ const useUserInfo = () => {
     isLoading,
     refetch,
   } = useQuery({
-    // enabled: !loading && !!user?.email,
+    enabled: !loading && !!user?.email,
     queryKey: ["user", user],
     queryFn: async () => {
       const { data } = await axiosSecure(`/users/${user?.email}`);

@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllUsers, updateUserStatus } from "../../../api/admin";
+import {
+  getAllUsers,
+  updateUserRole,
+  updateUserStatus,
+} from "../../../api/admin";
 
 import {
   Paper,
@@ -47,6 +51,23 @@ const Users = () => {
     }
   };
 
+  const handleMakeAdmin = async (id) => {
+    const role = "admin";
+    const res = await updateUserRole(id, role);
+    if (res.modifiedCount > 0) {
+      refetch();
+      toast.success("Role Upgraded Successfully.");
+    }
+  };
+  const handleMakeUser = async (id) => {
+    const role = "user";
+    const res = await updateUserRole(id, role);
+    if (res.modifiedCount > 0) {
+      refetch();
+      toast.success("Now He/She is A User.");
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: "auto" }} aria-label="simple table">
@@ -68,6 +89,8 @@ const Users = () => {
               handleBlock={handleBlock}
               key={user._id}
               handleActive={handleActive}
+              handleMakeAdmin={handleMakeAdmin}
+              handleMakeUser={handleMakeUser}
             />
           ))}
         </TableBody>

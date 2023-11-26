@@ -63,18 +63,18 @@ const Register = () => {
     }
     setPassErr(null);
 
-    const userInfo = {
-      district,
-      upazilla,
-      blood,
-    };
     const toastId = toast.loading("Account Creating...");
     try {
       setLoading(true);
       const { data } = await imageUpload(selectedImg);
       const result = await createUser(email, password);
       await updateUserProfile(name, data?.display_url);
-      console.log(result);
+      const userInfo = {
+        district,
+        upazilla,
+        blood,
+        image: data?.display_url,
+      };
 
       const dbResponse = await saveUser(result?.user, userInfo);
 

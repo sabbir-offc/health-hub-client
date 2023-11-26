@@ -22,8 +22,11 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { Home, Logout } from "@mui/icons-material";
 import useAuth from "../../hooks/useAuth";
+import useUserInfo from "../../hooks/useUserInfo";
+import Loader from "../Loader";
 const Sidebar = () => {
-  const { user, logOut } = useAuth();
+  const { logOut } = useAuth();
+  const { userInfo, isLoading } = useUserInfo();
   const [mobileOpen, setMobileOpen] = useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -57,33 +60,35 @@ const Sidebar = () => {
       to: "/dashboard/all-users",
     },
   ];
-
+  if (isLoading) return <Loader />;
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
-      <List>
-        {adminMenu.map((text) => (
-          <NavLink
-            key={text.to}
-            to={text.to}
-            className={({ isActive }) =>
-              isActive ? "active-lnk" : "disactive-lnk"
-            }
-          >
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{text.icon}</ListItemIcon>
-                <ListItemText
-                  primary={text.name}
-                  color="primary"
-                  sx={{ textDecoration: "none" }}
-                ></ListItemText>
-              </ListItemButton>
-            </ListItem>
-          </NavLink>
-        ))}
-      </List>
+      {userInfo?.role === "admin" && (
+        <List>
+          {adminMenu.map((text) => (
+            <NavLink
+              key={text.to}
+              to={text.to}
+              className={({ isActive }) =>
+                isActive ? "active-lnk" : "disactive-lnk"
+              }
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{text.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={text.name}
+                    color="primary"
+                    sx={{ textDecoration: "none" }}
+                  ></ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+      )}
       <Divider />
       <List>
         <NavLink to="/" style={{ textDecoration: "none", color: "black" }}>

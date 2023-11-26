@@ -36,6 +36,14 @@ export const getAllUsers = async () => {
 
 //update user status 
 export const updateUserStatus = async (id, status) => {
+
     const { data } = await axiosSecure.patch(`/user/status/${id}`, { status });
     return data;
+}
+
+//update user role 
+export const updateUserRole = async (id, role) => {
+    const { data } = await axiosSecure.patch(`/user/role/${id}`, { role });
+    return data
+
 }

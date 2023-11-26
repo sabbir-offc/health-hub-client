@@ -14,6 +14,7 @@ export const saveUser = async (user, userInfo) => {
         email: user?.email,
         role: 'patient',
         status: 'active',
+        image: userInfo?.image,
         upazilla: userInfo?.upazilla,
         district: userInfo?.district,
         blood: userInfo?.blood

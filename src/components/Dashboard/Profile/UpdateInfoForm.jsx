@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import {
   Box,
   Button,
@@ -6,8 +8,8 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
+
 import { Controller, useForm } from "react-hook-form";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
@@ -65,7 +67,7 @@ const UpdateInfoForm = ({ setShow }) => {
       } else {
         setUp(user?.photoURL);
       }
-      console.log(up);
+
       //update user name and image
       await updateUserProfile(name, up);
 
@@ -77,12 +79,12 @@ const UpdateInfoForm = ({ setShow }) => {
         upazilla,
       };
       const dbResponse = await updateUserInfo(updatedInfo, userInfo?._id);
+      if (dbResponse.modifiedCount > 0) return setShow(true);
       console.log(dbResponse);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
-      setShow(true);
     }
   };
   return (
@@ -230,4 +232,7 @@ const UpdateInfoForm = ({ setShow }) => {
   );
 };
 
+UpdateInfoForm.propTypes = {
+  setShow: PropTypes.func,
+};
 export default UpdateInfoForm;
