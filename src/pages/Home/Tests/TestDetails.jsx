@@ -14,7 +14,7 @@ const TestDetails = () => {
   const { banners, isLoading } = useBanner();
   const [discountRate, setDiscountRate] = useState(null);
   const [stripeP, setStripeP] = useState(null);
-  const [bookingInfo, setBookingInfo] = useState(null);
+  const [appoinmentInfo, setAppoinmentInfo] = useState(null);
   const { user } = useAuth();
   const handleClose = () => {
     setOpen(false);
@@ -51,7 +51,7 @@ const TestDetails = () => {
         testId: _id,
         image: image,
       };
-      setBookingInfo(info);
+      setAppoinmentInfo(info);
       const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
       setStripeP(stripePromise);
     }
@@ -97,7 +97,7 @@ const TestDetails = () => {
           <BookingModal
             stripePromise={stripeP}
             banner={banner}
-            bookingInfo={bookingInfo}
+            appoinmentInfo={appoinmentInfo}
             open={open}
             test={test}
             handleClose={handleClose}

@@ -9,14 +9,12 @@ import { useTheme } from "@mui/material/styles";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckOutForm";
-import { useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 
 const BookingModal = ({
   handleClose,
   open,
   test,
-  bookingInfo,
+  appoinmentInfo,
   handleDiscount,
   discountRate,
   stripePromise,
@@ -63,7 +61,7 @@ const BookingModal = ({
                   ml={"2px"}
                   fontFamily={"roboto"}
                 >
-                  Test Price: {discountRate}
+                  Discount Price: {discountRate}
                 </Typography>
               )}
             </Grid>
@@ -72,7 +70,10 @@ const BookingModal = ({
 
         {stripePromise && (
           <Elements stripe={stripePromise}>
-            <CheckoutForm bookingInfo={bookingInfo} closeModal={handleClose} />
+            <CheckoutForm
+              appoinmentInfo={appoinmentInfo}
+              closeModal={handleClose}
+            />
           </Elements>
         )}
       </Dialog>
@@ -84,7 +85,9 @@ BookingModal.propTypes = {
   handleClose: PropTypes.func,
   handleDiscount: PropTypes.func,
   open: PropTypes.bool,
-  testInfo: PropTypes.object,
+  test: PropTypes.object,
+  appoinmentInfo: PropTypes.object,
   discountRate: PropTypes.number,
+  stripePromise: PropTypes.object,
 };
 export default BookingModal;
