@@ -2,16 +2,18 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import demonBanner from "/public/demoBanner.jpg";
 import useBanner from "../../hooks/useBanner";
 import { useEffect, useState } from "react";
+import { ArrowRight } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import Loader from "../Loader";
 const Banner = () => {
   const [banner, setBanner] = useState(null);
   const { banners, isLoading } = useBanner();
-  isLoading && <p>Loading...</p>;
+  isLoading && <Loader />;
   useEffect(() => {
     if (banners) {
       banners.find((banner) => banner.isActive === true && setBanner(banner));
     }
   }, [banners]);
-  console.log(banner);
 
   return (
     <Grid
@@ -25,7 +27,12 @@ const Banner = () => {
       <Container sx={{ height: "100%" }}>
         <Grid
           container
-          sx={{ display: "flex" }}
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           justifyContent="center"
           alignItems="center"
         >
@@ -35,7 +42,7 @@ const Banner = () => {
               {banner ? banner?.title : "Trusted Diagnostic Center"}
             </Typography>
             <Typography
-              sx={{ fontWeight: 400, mr: 2 }}
+              sx={{ fontWeight: 400, maxWidth: "70px" }}
               variant="p"
               color="black"
             >
@@ -55,6 +62,22 @@ const Banner = () => {
                 {banner ? banner?.discountRate : 20}% Discount
               </Typography>
             </Grid>
+            <Link style={{ textDecoration: "none" }}>
+              <Button
+                sx={{
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  mt: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  "&:hover": {
+                    backgroundColor: "#21D026",
+                  },
+                }}
+              >
+                View All Test <ArrowRight />
+              </Button>
+            </Link>
           </Grid>
           <Grid item xs={12} md={6} lg={6} sx={{ flex: 1 }}>
             <img

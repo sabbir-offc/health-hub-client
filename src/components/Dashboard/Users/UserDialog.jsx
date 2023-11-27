@@ -58,7 +58,13 @@ const UserDialog = ({
             </Typography>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           {status === "active" ? (
             <Button
               onClick={() => handleBlock(_id)}
@@ -93,6 +99,9 @@ const UserDialog = ({
               {loading ? "Updating" : "Make Admin"}
             </Button>
           )}
+        </DialogActions>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -14,6 +14,7 @@ import AddTest from "../pages/Dashboard/Admin/Tests/AddTest";
 import AllTests from "../pages/Dashboard/Admin/Tests/AllTests";
 import UpdateTest from "../pages/Dashboard/Admin/Tests/UpdateTest";
 import { singleTest } from "../api/admin";
+import TestDetails from "../pages/Home/Tests/TestDetails";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "test/:id",
+        element: (
+          <PrivateRoute>
+            <TestDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => singleTest(params.id),
       },
     ],
   },

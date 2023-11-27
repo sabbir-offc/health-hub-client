@@ -3,7 +3,7 @@ import { getAllTests } from "../api/admin";
 
 const useAllTests = () => {
   const {
-    data: tests,
+    data: tests = [],
     refetch,
     isLoading,
   } = useQuery({

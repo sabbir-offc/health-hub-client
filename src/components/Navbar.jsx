@@ -14,10 +14,11 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 
-const pages = ["Home", "All Test"];
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const Navbar = () => {
+  const pages = [
+    { name: "Home", to: "/" },
+    { name: "All Test", to: "/test" },
+  ];
   const { user, logOut } = useAuth();
   const settings = [
     {
@@ -110,9 +111,15 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                <Link
+                  key={page.name}
+                  style={{ textDecoration: "none" }}
+                  to={page.to}
+                >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -141,13 +148,18 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+              <Link
+                key={page.name}
+                to={page.to}
+                style={{ textDecoration: "none" }}
               >
-                {page}
-              </Button>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>
 

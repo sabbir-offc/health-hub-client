@@ -3,6 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import Footer from "../components/Home/Footer";
 import useUserInfo from "../hooks/useUserInfo";
 import Loader from "../components/Loader";
+import Navbar from "../components/Navbar";
 const Main = () => {
   const { userInfo, isLoading } = useUserInfo();
 
@@ -12,6 +13,7 @@ const Main = () => {
   }
   return (
     <Container maxWidth="xl">
+      <Navbar />
       <Outlet />
       <Footer />
     </Container>

@@ -15,6 +15,7 @@ import { imageUpload } from "../../../../api/imageUpload";
 import { addTest } from "../../../../api/admin";
 import { DayPicker } from "react-day-picker";
 import useAuth from "../../../../hooks/useAuth";
+import WebTitle from "../../../../components/WebTitle/WebTitle";
 const AddTest = () => {
   const [imgBtnText, setImgBtnText] = useState("Upload Test Thumbnail Image");
   const [selectedImg, setSelectedImg] = useState(undefined);
@@ -76,209 +77,212 @@ const AddTest = () => {
     setImgBtnText(image.name);
   };
   return (
-    <Grid
-      component="main"
-      container
-      sx={{
-        display: "flex",
-        py: 2,
-        justifyContent: "center",
-        placeItems: "center",
-      }}
-    >
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 5,
-            mx: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Add Test For Patient
-          </Typography>
+    <>
+      <WebTitle title={"Add Test"} />
+      <Grid
+        component="main"
+        container
+        sx={{
+          display: "flex",
+          py: 2,
+          justifyContent: "center",
+          placeItems: "center",
+        }}
+      >
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}
+            sx={{
+              my: 5,
+              mx: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <Controller
-              name="title"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  {...register("title", { maxLength: 35 })}
-                  margin="normal"
-                  fullWidth
-                  required
-                  id="title"
-                  label="Test Name"
-                  name="title"
-                  autoFocus
-                  type="text"
-                  autoComplete="title"
-                />
-              )}
-            />
-            {errors?.title?.type === "maxLength" && (
-              <Typography variant="span" color="red">
-                {"Title characters length shouldn't be greater than 30"}
-              </Typography>
-            )}
-
-            <Controller
-              name="image"
-              control={control}
-              defaultValue={selectedImg}
-              render={({ field }) => (
-                <Button
-                  component="label"
-                  fullWidth
-                  sx={{
-                    my: 2,
-                  }}
-                  variant="contained"
-                  startIcon={<CloudUploadIcon />}
-                >
-                  {imgBtnText}
-                  <VisuallyHiddenInput
-                    type="file"
+            <Typography component="h1" variant="h5">
+              Add Test For Patient
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleSubmit(onSubmit)}
+              sx={{ mt: 1 }}
+            >
+              <Controller
+                name="title"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
                     {...field}
-                    required={!selectedImg}
-                    onChange={(e) => {
-                      const selectedFile = e.target.files[0];
-                      handleImageTxt(selectedFile);
-                      setSelectedImg(selectedFile);
-                    }}
+                    {...register("title", { maxLength: 35 })}
+                    margin="normal"
+                    fullWidth
+                    required
+                    id="title"
+                    label="Test Name"
+                    name="title"
+                    autoFocus
+                    type="text"
+                    autoComplete="title"
                   />
-                </Button>
-              )}
-            />
-
-            <Controller
-              name="details"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  margin="normal"
-                  required
-                  fullWidth
-                  multiline
-                  rows={4}
-                  type="text"
-                  id="details"
-                  label="Test Details"
-                  name="details"
-                  autoComplete="details"
-                />
-              )}
-            />
-            <Grid
-              container
-              sx={{ display: { md: "flex", sm: "block" } }}
-              justifyContent={"space-between"}
-              alignItems={"center"}
-              gap={"5px"}
-            >
-              <Grid item>
-                <Controller
-                  name="price"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      {...register("price", { required: true })}
-                      margin="normal"
-                      name="price"
-                      label="Test Price"
-                      type="number"
-                      id="price"
-                    />
-                  )}
-                />
-                {errors?.price?.type === "required" && (
-                  <Typography
-                    variant="h6"
-                    color="red"
-                    fontSize={"16px"}
-                    fontWeight={400}
-                    mt={0}
-                  >
-                    Price Is required.
-                  </Typography>
                 )}
-              </Grid>
-              <Grid item width={"full"}>
-                <Controller
-                  name="slots"
-                  control={control}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      {...register("slots", { required: true })}
-                      margin="normal"
-                      name="slots"
-                      fullWidth
-                      label="Test slots"
-                      type="number"
-                      id="slots"
-                    />
-                  )}
-                />
-                {errors?.slots?.type === "required" && (
-                  <Typography
-                    variant="h6"
-                    color="red"
-                    fontWeight={400}
-                    fontSize={"16px"}
-                  >
-                    Slots Is required.
-                  </Typography>
-                )}
-              </Grid>
-            </Grid>
-            <Controller
-              name="date"
-              control={control}
-              render={({ field }) => (
-                <DayPicker
-                  {...field}
-                  {...register("date")}
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelected}
-                />
+              />
+              {errors?.title?.type === "maxLength" && (
+                <Typography variant="span" color="red">
+                  {"Title characters length shouldn't be greater than 30"}
+                </Typography>
               )}
-            />
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              {loading ? (
-                <ImSpinner5
-                  id="spin"
-                  style={{ animation: "spin 1s linear infinite" }}
-                  size={23}
-                />
-              ) : (
-                "Add"
-              )}
-            </Button>
+              <Controller
+                name="image"
+                control={control}
+                defaultValue={selectedImg}
+                render={({ field }) => (
+                  <Button
+                    component="label"
+                    fullWidth
+                    sx={{
+                      my: 2,
+                    }}
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                  >
+                    {imgBtnText}
+                    <VisuallyHiddenInput
+                      type="file"
+                      {...field}
+                      required={!selectedImg}
+                      onChange={(e) => {
+                        const selectedFile = e.target.files[0];
+                        handleImageTxt(selectedFile);
+                        setSelectedImg(selectedFile);
+                      }}
+                    />
+                  </Button>
+                )}
+              />
+
+              <Controller
+                name="details"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    margin="normal"
+                    required
+                    fullWidth
+                    multiline
+                    rows={4}
+                    type="text"
+                    id="details"
+                    label="Test Details"
+                    name="details"
+                    autoComplete="details"
+                  />
+                )}
+              />
+              <Grid
+                container
+                sx={{ display: { md: "flex", sm: "block" } }}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+                gap={"5px"}
+              >
+                <Grid item>
+                  <Controller
+                    name="price"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        {...register("price", { required: true })}
+                        margin="normal"
+                        name="price"
+                        label="Test Price"
+                        type="number"
+                        id="price"
+                      />
+                    )}
+                  />
+                  {errors?.price?.type === "required" && (
+                    <Typography
+                      variant="h6"
+                      color="red"
+                      fontSize={"16px"}
+                      fontWeight={400}
+                      mt={0}
+                    >
+                      Price Is required.
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item width={"full"}>
+                  <Controller
+                    name="slots"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        {...register("slots", { required: true })}
+                        margin="normal"
+                        name="slots"
+                        fullWidth
+                        label="Test slots"
+                        type="number"
+                        id="slots"
+                      />
+                    )}
+                  />
+                  {errors?.slots?.type === "required" && (
+                    <Typography
+                      variant="h6"
+                      color="red"
+                      fontWeight={400}
+                      fontSize={"16px"}
+                    >
+                      Slots Is required.
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
+              <Controller
+                name="date"
+                control={control}
+                render={({ field }) => (
+                  <DayPicker
+                    {...field}
+                    {...register("date")}
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={setSelected}
+                  />
+                )}
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {loading ? (
+                  <ImSpinner5
+                    id="spin"
+                    style={{ animation: "spin 1s linear infinite" }}
+                    size={23}
+                  />
+                ) : (
+                  "Add"
+                )}
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

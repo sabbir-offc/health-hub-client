@@ -13,6 +13,7 @@ import Loader from "../../../components/Loader";
 import UserDialog from "../../../components/Dashboard/Users/UserDialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import WebTitle from "../../../components/WebTitle/WebTitle";
 
 const Users = () => {
   const [loading, setLoading] = useState(false);
@@ -89,43 +90,46 @@ const Users = () => {
     }
   };
   return (
-    <Grid
-      display={"flex"}
-      flexWrap={"wrap"}
-      gap={"6px"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      {users?.map((user) => (
-        <Card key={user?._id} sx={{ maxWidth: 320, padding: 1 }}>
-          <CardActionArea>
-            <Avatar
-              src={user?.image}
-              alt="green iguana"
-              sx={{ width: "80px", height: "80px", mx: "auto" }}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {user?.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {user?.email}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <UserDialog
-              handleBlock={handleBlock}
-              handleActive={handleActive}
-              user={user}
-              loading={loading}
-              handleMakeAdmin={handleMakeAdmin}
-              handleMakeUser={handleMakeUser}
-            />
-          </CardActions>
-        </Card>
-      ))}
-    </Grid>
+    <>
+      <WebTitle title={"All Users"} />
+      <Grid
+        display={"flex"}
+        flexWrap={"wrap"}
+        gap={"6px"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        {users?.map((user) => (
+          <Card key={user?._id} sx={{ minWidth: 200, padding: 2 }}>
+            <CardActionArea sx={{ py: 2 }}>
+              <Avatar
+                src={user?.image}
+                alt="green iguana"
+                sx={{ width: "80px", height: "80px", mx: "auto" }}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {user?.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {user?.email}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <UserDialog
+                handleBlock={handleBlock}
+                handleActive={handleActive}
+                user={user}
+                loading={loading}
+                handleMakeAdmin={handleMakeAdmin}
+                handleMakeUser={handleMakeUser}
+              />
+            </CardActions>
+          </Card>
+        ))}
+      </Grid>
+    </>
   );
 };
 export default Users;
