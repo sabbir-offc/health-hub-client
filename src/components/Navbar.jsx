@@ -17,7 +17,7 @@ import useAuth from "../hooks/useAuth";
 const Navbar = () => {
   const pages = [
     { name: "Home", to: "/" },
-    { name: "All Test", to: "/test" },
+    { name: "All Test", to: "/tests" },
   ];
   const { user, logOut } = useAuth();
   const settings = [
@@ -27,7 +27,7 @@ const Navbar = () => {
     },
     {
       name: "Dashboard",
-      to: "/dashboard",
+      to: "/dashboard/all-tests",
     },
   ];
   const [anchorElNav, setAnchorElNav] = useState(null);

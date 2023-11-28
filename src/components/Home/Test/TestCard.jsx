@@ -12,8 +12,8 @@ const TestCard = ({ test }) => {
   const { title, details, image, _id } = test;
   return (
     <Grid item>
-      <Card sx={{}}>
-        <CardMedia sx={{ height: 140 }} image={image} title="green iguana" />
+      <Card sx={{ maxWidth: "290px" }}>
+        <CardMedia sx={{ height: 140 }} image={image} title={title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {title}

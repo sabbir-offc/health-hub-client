@@ -12,7 +12,13 @@ import {
 const Footer = () => {
   return (
     <Container
-      sx={{ position: "relative", overflow: "hidden", bgcolor: "white", py: 8 }}
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        bgcolor: "white",
+        py: 5,
+        mt: 8,
+      }}
     >
       <Grid
         container

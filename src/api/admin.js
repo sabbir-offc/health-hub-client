@@ -22,8 +22,12 @@ export const addTest = async (testInfo) => {
     return data;
 }
 //get all tests
-export const getAllTests = async () => {
-    const { data } = await axiosSecure('/tests');
+export const getAllTests = async (sortField) => {
+    if (sortField) {
+        const { data } = await axiosSecure(`/tests?sort=${sortField}`);
+        return data;
+    }
+    const { data } = await axiosSecure(`/tests`);
     return data;
 }
 //delete a single test

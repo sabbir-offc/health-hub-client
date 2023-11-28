@@ -62,7 +62,7 @@ const Banner = () => {
                 {banner ? banner?.discountRate : 20}% Discount
               </Typography>
             </Grid>
-            <Link style={{ textDecoration: "none" }}>
+            <Link style={{ textDecoration: "none" }} to={"/tests"}>
               <Button
                 sx={{
                   backgroundColor: "#4CAF50",

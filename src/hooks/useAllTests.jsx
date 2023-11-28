@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllTests } from "../api/admin";
 
-const useAllTests = () => {
+const useAllTests = ({ sortField } = {}) => {
   const {
     data: tests = [],
     refetch,
@@ -9,8 +9,13 @@ const useAllTests = () => {
   } = useQuery({
     queryKey: ["allTests"],
     queryFn: async () => {
-      const res = await getAllTests();
-      return res;
+      if (sortField) {
+        const res = await getAllTests(sortField);
+        return res;
+      } else {
+        const res = await getAllTests();
+        return res;
+      }
     },
   });
   return { tests, refetch, isLoading };

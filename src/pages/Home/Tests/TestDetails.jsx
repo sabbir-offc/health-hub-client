@@ -57,6 +57,7 @@ const TestDetails = () => {
         date: new Date(date),
         title,
         testId: _id,
+        status: "pending",
       };
       setAppointmentInfo(info);
       console.log(date, ":", info?.date);
@@ -100,6 +101,7 @@ const TestDetails = () => {
             <Button
               variant="contained"
               onClick={handleOpenModal}
+              disabled={slots < 1}
               sx={{ my: "10px", backgroundColor: "#FF5722" }}
             >
               Book Now

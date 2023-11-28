@@ -16,12 +16,13 @@ import { addTest } from "../../../../api/admin";
 import { DayPicker } from "react-day-picker";
 import useAuth from "../../../../hooks/useAuth";
 import WebTitle from "../../../../components/WebTitle/WebTitle";
+import { useNavigate } from "react-router-dom";
 const AddTest = () => {
   const [imgBtnText, setImgBtnText] = useState("Upload Test Thumbnail Image");
   const [selectedImg, setSelectedImg] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [selectedDate, setSelected] = useState(new Date());
-
+  const navigate = useNavigate();
   const { user } = useAuth();
   //hook form
   const {
@@ -53,6 +54,7 @@ const AddTest = () => {
       const dbResponse = await addTest(testInfo);
       if (dbResponse.acknowledged) {
         toast.success("Test Added Successfully");
+        navigate("/dashboard/all-tests");
       }
     } catch (error) {
       toast.error(error.message);
