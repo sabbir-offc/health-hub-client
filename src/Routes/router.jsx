@@ -15,6 +15,7 @@ import AllTests from "../pages/Dashboard/Admin/Tests/AllTests";
 import UpdateTest from "../pages/Dashboard/Admin/Tests/UpdateTest";
 import { singleTest } from "../api/admin";
 import TestDetails from "../pages/Home/Tests/TestDetails";
+import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,16 @@ const router = createBrowserRouter([
             <AdminRoutes>
               <Users />
             </AdminRoutes>
+          </PrivateRoute>
+        ),
+      },
+
+      //user routes
+      {
+        path: "my-appointments",
+        element: (
+          <PrivateRoute>
+            <UpcomingAppointments />
           </PrivateRoute>
         ),
       },

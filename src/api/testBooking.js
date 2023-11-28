@@ -10,7 +10,16 @@ export const createPaymentIntent = async (price) => {
 }
 
 
-//save appoinment info in database
-export const saveAppoinment = async () => {
+//save appointment info in database
+export const saveAppointmentInfo = async (appointmentInfo) => {
+    const { data } = await axiosSecure.post('/appointments', appointmentInfo);
+    return data;
+}
 
+
+//update slots and booking number
+
+export const updateStatus = async (id) => {
+    const { data } = await axiosSecure.patch(`/test/slots/${id}`,);
+    return data;
 }

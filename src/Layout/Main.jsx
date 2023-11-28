@@ -12,7 +12,7 @@ const Main = () => {
     return <Navigate to="/login" />;
   }
   return (
-    <Container maxWidth="xl">
+    <Container sx={{ fontFamily: "roboto" }} maxWidth="xl">
       <Navbar />
       <Outlet />
       <Footer />

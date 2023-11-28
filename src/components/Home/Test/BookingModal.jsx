@@ -9,22 +9,20 @@ import { useTheme } from "@mui/material/styles";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckOutForm";
-
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 const BookingModal = ({
   handleClose,
   open,
   test,
-  appoinmentInfo,
+  appointmentInfo,
   handleDiscount,
   discountRate,
-  stripePromise,
 }) => {
   const { title, date, price } = test;
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
-  console.log(discountRate);
   const dbDate = new Date(date);
   const modifiedDate = dbDate.toLocaleDateString("en-GB");
   return (
@@ -47,6 +45,7 @@ const BookingModal = ({
               label={"Have any promo code?"}
               name="discountPrice"
               required
+              autoFocus
               sx={{ mt: 3, mb: 1 }}
             ></TextField>
             <br></br>
@@ -68,14 +67,13 @@ const BookingModal = ({
           </Box>
         </DialogContent>
 
-        {stripePromise && (
-          <Elements stripe={stripePromise}>
-            <CheckoutForm
-              appoinmentInfo={appoinmentInfo}
-              closeModal={handleClose}
-            />
-          </Elements>
-        )}
+        <Elements stripe={stripePromise}>
+          <CheckoutForm
+            appointmentInfo={appointmentInfo}
+            discountRate={discountRate}
+            closeModal={handleClose}
+          />
+        </Elements>
       </Dialog>
     </>
   );
@@ -86,7 +84,7 @@ BookingModal.propTypes = {
   handleDiscount: PropTypes.func,
   open: PropTypes.bool,
   test: PropTypes.object,
-  appoinmentInfo: PropTypes.object,
+  appointmentInfo: PropTypes.object,
   discountRate: PropTypes.number,
   stripePromise: PropTypes.object,
 };

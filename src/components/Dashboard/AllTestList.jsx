@@ -42,5 +42,6 @@ const AllTestList = ({ test, handleDelete }) => {
 };
 AllTestList.propTypes = {
   test: PropTypes.object,
+  handleDelete: PropTypes.func,
 };
 export default AllTestList;

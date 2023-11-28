@@ -43,9 +43,9 @@ const AddTest = () => {
         title,
         image: data?.display_url,
         details,
-        date: selectedDate,
-        price,
-        slots,
+        date: new Date(selectedDate),
+        price: parseInt(price),
+        slots: parseInt(slots),
         author: user?.displayName,
         authorImg: user?.photoURL,
       };

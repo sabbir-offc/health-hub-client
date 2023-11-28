@@ -17,8 +17,9 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { PiFlagBannerFill, PiUser, PiUsersThreeBold } from "react-icons/pi";
 
-import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import { TbReportMedical } from "react-icons/tb";
+import { GoNote } from "react-icons/go";
+import { PiNotepad } from "react-icons/pi";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import { Home, Logout } from "@mui/icons-material";
@@ -55,25 +56,57 @@ const Sidebar = () => {
       name: "All Tests",
       to: "/dashboard/all-tests",
     },
-    {
-      icon: <ImportContactsIcon />,
-      name: "Add Appoinment",
-      to: "/dashboard/add-appoinment",
-    },
+
     {
       icon: <PiUsersThreeBold />,
       name: "All Users",
       to: "/dashboard/all-users",
     },
   ];
+  const userMenu = [
+    {
+      icon: <GoNote size={24} />,
+      name: "My Upcoming Appointments",
+      to: "/dashboard/my-appointments",
+    },
+    {
+      icon: <PiNotepad size={24} />,
+      name: "Test Results",
+      to: "/dashboard/test-results",
+    },
+  ];
+
   if (isLoading) return <Loader />;
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
-      {userInfo?.role === "admin" && (
+      {userInfo?.role === "admin" ? (
         <List>
           {adminMenu.map((text) => (
+            <NavLink
+              key={text.to}
+              to={text.to}
+              className={({ isActive }) =>
+                isActive ? "active-lnk" : "disactive-lnk"
+              }
+            >
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>{text.icon}</ListItemIcon>
+                  <ListItemText
+                    primary={text.name}
+                    color="primary"
+                    sx={{ textDecoration: "none" }}
+                  ></ListItemText>
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+      ) : (
+        <List>
+          {userMenu.map((text) => (
             <NavLink
               key={text.to}
               to={text.to}

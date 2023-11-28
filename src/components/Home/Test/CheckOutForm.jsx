@@ -4,27 +4,34 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import "../../../checkoutForm.css";
 import useAuth from "../../../hooks/useAuth";
-import { ImSpinner9 } from "react-icons/im";
+import { ImSpinner5 } from "react-icons/im";
 import { Box, Button, Grid } from "@mui/material";
-import { createPaymentIntent } from "../../../api/testBooking";
+import {
+  createPaymentIntent,
+  saveAppointmentInfo,
+  updateStatus,
+} from "../../../api/testBooking";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({ bookingInfo, closeModal }) => {
+const CheckoutForm = ({ appointmentInfo, closeModal, discountRate }) => {
   const stripe = useStripe();
   const elements = useElements();
   const { user } = useAuth();
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
+  const navigate = useNavigate();
 
   // Create Payment Intent
   useEffect(() => {
-    if (bookingInfo?.price > 0) {
-      createPaymentIntent({ price: bookingInfo?.price }).then((data) => {
+    if (discountRate > 0) {
+      createPaymentIntent({ price: discountRate }).then((data) => {
         console.log(data);
         setClientSecret(data.clientSecret);
       });
     }
-  }, [bookingInfo?.price]);
+  }, [discountRate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,12 +82,22 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
       // save payment information to the server
       // Update room status in db
       const paymentInfo = {
-        ...bookingInfo,
+        ...appointmentInfo,
         transactionId: paymentIntent.id,
-        date: new Date(),
       };
-
-      setProcessing(false);
+      try {
+        await saveAppointmentInfo(paymentInfo);
+        await updateStatus(appointmentInfo?.testId);
+        toast.success(
+          `Appointment booking successfully! TR: ${paymentIntent?.id}`
+        );
+        navigate("/dashboard/my-appointments");
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      } finally {
+        setProcessing(false);
+      }
     }
   };
 
@@ -114,13 +131,17 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
           </Button>
           <Button
             type="submit"
-            variant="primary"
+            variant="contained"
             disabled={!stripe || !clientSecret || processing}
           >
             {processing ? (
-              <ImSpinner9 className="m-auto animate-spin" size={24} />
+              <ImSpinner5
+                id="spin"
+                style={{ animation: "spin 1s linear infinite" }}
+                size={23}
+              />
             ) : (
-              `Pay ${bookingInfo?.price}৳`
+              `Pay ${discountRate || ""}$`
             )}
           </Button>
         </Grid>
@@ -131,7 +152,8 @@ const CheckoutForm = ({ bookingInfo, closeModal }) => {
 };
 
 CheckoutForm.propTypes = {
-  bookingInfo: PropTypes.object,
+  appointmentInfo: PropTypes.object,
   closeModal: PropTypes.func,
+  discountRate: PropTypes.number,
 };
 export default CheckoutForm;
