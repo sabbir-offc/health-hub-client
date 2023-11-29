@@ -1,3 +1,4 @@
+
 import axiosSecure from "."
 import { axiosPublic } from "../hooks/useAxiosPublic";
 
@@ -74,3 +75,15 @@ export const updateUserRole = async (id, role) => {
 
 }
 
+//get reservation under a tes;
+export const getAllReservation = async (id, searchText) => {
+    const { data } = await axiosSecure(`/reservation/${id}?search=${searchText}`);
+    return data;
+}
+
+
+//update reservation status
+export const updateReservationStatus = async (id, result) => {
+    const { data } = await axiosSecure.patch(`/reservation/result/${id}`, result);
+    return data;
+}

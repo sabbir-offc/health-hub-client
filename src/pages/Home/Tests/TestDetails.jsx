@@ -1,6 +1,6 @@
 import { Button, Divider, Grid, Paper, Typography } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
-import BookingModal from "../../../components/Home/Test/BookingModal";
+import BookingModal from "../../../components/Modal/BookingModal";
 import { useEffect, useState } from "react";
 import useBanner from "../../../hooks/useBanner";
 import Loader from "../../../components/Loader";

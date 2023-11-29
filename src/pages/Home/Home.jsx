@@ -3,6 +3,8 @@ import WebTitle from "../../components/WebTitle/WebTitle";
 import Banner from "../../components/Home/Banner";
 import { Box, Divider, Typography } from "@mui/material";
 import FeaturedTest from "./Tests/FeaturedTest";
+import Promotion from "./Promotion/Promotion";
+import Team from "./Team/Team";
 
 const Home = () => {
   return (
@@ -16,6 +18,8 @@ const Home = () => {
           </Typography>
           <Divider />
           <FeaturedTest />
+          <Promotion />
+          <Team />
         </Box>
       </Container>
     </>

@@ -22,9 +22,10 @@ import { imageUpload } from "../../../api/imageUpload";
 import { updateUserInfo } from "../../../api/auth";
 import { ImSpinner5 } from "react-icons/im";
 import useUserInfo from "../../../hooks/useUserInfo";
+import toast from "react-hot-toast";
 
 const UpdateInfoForm = ({ setShow }) => {
-  const { user, updateUserProfile } = useAuth();
+  const { updateUserProfile } = useAuth();
   const [district, setDistrict] = useState("Dhaka");
   const [upazilla, setUpazilla] = useState("Savar");
   const [blood, setBlood] = useState("A+");
@@ -34,7 +35,7 @@ const UpdateInfoForm = ({ setShow }) => {
   const { location, isLoading } = useGeoLocation();
   const [loading, setLoading] = useState(false);
   const { handleSubmit, control } = useForm();
-  const { userInfo } = useUserInfo();
+  const { userInfo, refetch } = useUserInfo();
 
   if (isLoading) return <Loader />;
 
@@ -79,10 +80,13 @@ const UpdateInfoForm = ({ setShow }) => {
         upazilla,
       };
       const dbResponse = await updateUserInfo(updatedInfo, userInfo?._id);
-      if (dbResponse.modifiedCount > 0) return setShow(true);
-      console.log(dbResponse);
+      if (dbResponse.modifiedCount > 0) {
+        refetch();
+        toast.success("User Profile updated successfully");
+        return setShow(true);
+      }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -151,6 +155,7 @@ const UpdateInfoForm = ({ setShow }) => {
               {...field}
               labelId="blood"
               label="Blood Groups"
+              defaultValue={userInfo?.blood}
               onChange={(e) => {
                 setBlood(e.target.value);
                 field.onChange(e);
@@ -177,6 +182,7 @@ const UpdateInfoForm = ({ setShow }) => {
               {...field}
               labelId="district"
               label="Districts"
+              defaultValue={userInfo?.district}
               onChange={(e) => {
                 setDistrict(e.target.value);
                 field.onChange(e);
@@ -202,6 +208,7 @@ const UpdateInfoForm = ({ setShow }) => {
               {...field}
               labelId="upazilla"
               label="Upazilla"
+              defaultValue={userInfo?.upazilla}
               onChange={(e) => {
                 setUpazilla(e.target.value);
                 field.onChange(e);

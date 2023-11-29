@@ -8,7 +8,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { Box, Grid, TextField, Typography } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckOutForm";
+import CheckoutForm from "../Home/Test/CheckOutForm";
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 const BookingModal = ({

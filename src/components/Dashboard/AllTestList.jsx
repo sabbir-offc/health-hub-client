@@ -22,6 +22,24 @@ const AllTestList = ({ test, handleDelete }) => {
       <TableCell align="right">{modifiedDate}</TableCell>
       <TableCell align="right">
         <Link
+          to={`/dashboard/test-reservation/${_id}`}
+          style={{ textTransform: "none" }}
+        >
+          <Button
+            sx={{
+              bgcolor: "#3498DB",
+              color: "white",
+              "&:hover": {
+                bgcolor: "Highlight",
+              },
+            }}
+          >
+            See All Reservation
+          </Button>
+        </Link>
+      </TableCell>
+      <TableCell align="right">
+        <Link
           to={`/dashboard/update-test/${_id}`}
           style={{ textTransform: "none" }}
         >

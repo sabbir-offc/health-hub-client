@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import SyncLoader from "react-spinners/SyncLoader";
 const Loader = () => {
   return (

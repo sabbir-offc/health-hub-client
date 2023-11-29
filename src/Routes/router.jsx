@@ -18,6 +18,7 @@ import TestDetails from "../pages/Home/Tests/TestDetails";
 import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 import TestReservation from "../pages/Dashboard/Admin/Tests/TestReservation";
 import AllTestPage from "../pages/Home/Tests/AllTest/AllTestPage";
+import TestResult from "../pages/Dashboard/User/TestResult";
 
 const router = createBrowserRouter([
   {
@@ -101,7 +102,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "test-reservation",
+        path: "test-reservation/:id",
         element: (
           <PrivateRoute>
             <AdminRoutes>
@@ -125,9 +126,9 @@ const router = createBrowserRouter([
         path: "all-users",
         element: (
           <PrivateRoute>
-            {/* <AdminRoutes> */}
-            <Users />
-            {/* </AdminRoutes> */}
+            <AdminRoutes>
+              <Users />
+            </AdminRoutes>
           </PrivateRoute>
         ),
       },
@@ -138,6 +139,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UpcomingAppointments />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "test-results",
+        element: (
+          <PrivateRoute>
+            <TestResult />
           </PrivateRoute>
         ),
       },

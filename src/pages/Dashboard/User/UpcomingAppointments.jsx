@@ -13,6 +13,7 @@ import AppointmentLists from "../../../components/User/AppointmentLists";
 import useAppointments from "../../../hooks/useAppointments";
 import { cancelAppointment } from "../../../api/user";
 import Swal from "sweetalert2";
+import EmptyState from "../../../components/Home/EmptyState";
 
 const UpcomingAppointments = () => {
   const { appointments, isLoading, refetch } = useAppointments();
@@ -44,30 +45,34 @@ const UpcomingAppointments = () => {
   return (
     <>
       <WebTitle title={"Upcoming Appointments"} />
-      <TableContainer component={Paper}>
-        <Table
-          sx={{ minWidth: "auto", overflowX: "auto" }}
-          aria-label="simple table"
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell>Test Name</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell align="right">Time</TableCell>
-              <TableCell align="right">Cancel</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {appointments?.map((appointment) => (
-              <AppointmentLists
-                key={appointment._id}
-                appointment={appointment}
-                handleCancel={handleCancel}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {appointments.length > 0 ? (
+        <TableContainer component={Paper}>
+          <Table
+            sx={{ minWidth: "auto", overflowX: "auto" }}
+            aria-label="simple table"
+          >
+            <TableHead>
+              <TableRow>
+                <TableCell>Test Name</TableCell>
+                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Time</TableCell>
+                <TableCell align="right">Cancel</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {appointments?.map((appointment) => (
+                <AppointmentLists
+                  key={appointment._id}
+                  appointment={appointment}
+                  handleCancel={handleCancel}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <EmptyState height={"80vh"} />
+      )}
     </>
   );
 };
