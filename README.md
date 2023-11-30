@@ -41,4 +41,4 @@ Explore the Health Hub Management System live: [Health Hub](https://diagnostic-c
 
 ## Contact
 
-For any inquiries, please contact us at [support@diagnostic-center.com](mailto:mdsabbirhowlader420@gmail.com).
+For any inquiries, please contact us at [mdsabbirhowlader420@gmail.com](mailto:mdsabbirhowlader420@gmail.com).

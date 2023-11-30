@@ -15,16 +15,11 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner5 } from "react-icons/im";
 import WebTitle from "../../components/WebTitle/WebTitle";
-import useUserInfo from "../../hooks/useUserInfo";
 
 const Login = () => {
   const { loading, setLoading, signIn } = useAuth();
   const location = useLocation();
-  const { userInfo } = useUserInfo();
-  const from =
-    location?.state?.from?.pathname || userInfo.role === "admin"
-      ? "/dashboard/all-tests"
-      : "/dashboard/my-appointments";
+  const from = location?.state?.from?.pathname || "/dashboard/profile";
   const {
     register,
     handleSubmit,
@@ -39,11 +34,10 @@ const Login = () => {
     try {
       const toastId = toast.loading("Logging...");
       await signIn(email, password)
-        .then(() => {
+        .then(async () => {
           toast.success("Logged In Successfully", { id: toastId });
-          navigate(from, { replace: true });
+          await navigate(from, { replace: true });
         })
-
         .catch(() => {
           toast.error("Login Failed", { id: toastId });
         });
