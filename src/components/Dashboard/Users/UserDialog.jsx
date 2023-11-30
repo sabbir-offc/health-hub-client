@@ -22,7 +22,7 @@ const UserDialog = ({
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const { name, email, role, status, _id } = user;
+  const { name, email, role, status, _id, blood, district, upazilla } = user;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -44,7 +44,10 @@ const UserDialog = ({
       >
         <DialogTitle id="responsive-dialog-title">{name}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{email}</DialogContentText>
+          <DialogContentText>Email: {email}</DialogContentText>
+          <DialogContentText>Blood Group: {blood}</DialogContentText>
+          <DialogContentText>District: {district}</DialogContentText>
+          <DialogContentText>Upazilla: {upazilla}</DialogContentText>
           <DialogContentText>
             Role:{" "}
             <Typography variant="span" textTransform={"uppercase"}>

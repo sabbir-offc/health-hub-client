@@ -22,11 +22,13 @@ import TestResult from "../pages/Dashboard/User/TestResult";
 import About from "../pages/AboutUs/About";
 import Contact from "../pages/Contact/Contact";
 import HealthHub from "../pages/Health Hub/HealthHub";
+import ErrorPage from "../pages/Error/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -74,6 +76,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       //admin routes
       {

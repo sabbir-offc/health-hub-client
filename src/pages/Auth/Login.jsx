@@ -15,11 +15,16 @@ import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner5 } from "react-icons/im";
 import WebTitle from "../../components/WebTitle/WebTitle";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const Login = () => {
   const { loading, setLoading, signIn } = useAuth();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  const { userInfo } = useUserInfo();
+  const from =
+    location?.state?.from?.pathname || userInfo.role === "admin"
+      ? "/dashboard/all-tests"
+      : "/dashboard/my-appointments";
   const {
     register,
     handleSubmit,

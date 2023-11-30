@@ -83,9 +83,9 @@ const Navbar = () => {
                 textDecoration: "none",
               }}
             >
-              Diagonstic{" "}
+              Health{" "}
               <Typography variant="span" color="#1565C0">
-                Center
+                Hub
               </Typography>
             </Typography>
           </Box>
@@ -153,7 +153,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            DC
+            Health H.
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

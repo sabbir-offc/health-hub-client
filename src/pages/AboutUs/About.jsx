@@ -2,17 +2,13 @@ import { Container, Typography, Paper, Grid } from "@mui/material";
 
 const About = () => {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
+    <Container maxWidth="lg" sx={{ my: 4 }}>
       <Paper elevation={3} sx={{ p: 3, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Welcome to Diagnostic Center Management System
+          Welcome to Health Hub
         </Typography>
 
-        <Typography variant="body1" paragraph>
-          Develop a robust Diagnostic Center Management System, a full-stack web
-          application that effectively manages appointments, patient records,
-          test results, and administrative tasks for a diagnostic center.
-        </Typography>
+        <Typography variant="body1" paragraph></Typography>
 
         <Typography variant="h5" sx={{ mt: 2 }} gutterBottom>
           Key Features:
@@ -71,7 +67,7 @@ const About = () => {
           <Grid item xs={12}>
             <Typography variant="body1">
               7. <strong>Customizable and Scalable:</strong>
-              {`Tailor the system to your diagnostic center's unique requirements.
+              {`Tailor the system to your Health Hub's unique requirements.
               Our scalable architecture allows for future expansions and
               additions based on evolving needs.`}
             </Typography>
@@ -86,10 +82,10 @@ const About = () => {
           </Grid>
         </Grid>
         <Typography variant="body1">
-          {`By choosing our Diagnostic Center Management System, you're investing
+          {`By choosing our Health Hub Management System, you're investing
           in a comprehensive solution that enhances efficiency, accuracy, and
-          overall management within your diagnostic center. Experience the
-          future of diagnostic center operations with our state-of-the-art web
+          overall management within your Health Hub. Experience the
+          future of Health Hub operations with our state-of-the-art web
           application.`}
         </Typography>
       </Paper>
