@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Comprehensive Health Checkup Package",
+    "description": "Book our Comprehensive Health Checkup Package and get a thorough assessment of your overall health. This package includes a range of essential tests to ensure a comprehensive analysis.",
+    "image": "https://aighospitals.com/uploads/images/1683702062645b412eb1c4e.jpg",
+    "discount": "20%",
+    "expiryDate": "2023-12-31"
+  },
+  {
+    "id": 2,
+    "title": "Family Wellness Package",
+    "description": "Prioritize your family's health with our exclusive Family Wellness Package. Avail of special discounts on health checkups for every family member. A healthy family is a happy family!",
+    "image": "https://aviaryrecoverycenter.com/wp-content/uploads/2016/04/family-wellness-program-500x333.jpg",
+    "discount": "15%",
+    "expiryDate": "2023-12-31"
+  },
+  {
+    "id": 3,
+    "title": "Cancer Awareness Month",
+    "description": "In support of Cancer Awareness Month, we're offering discounted rates on cancer screening tests. Detecting cancer early can save lives. Schedule your screening today!",
+    "image": "https://www.uab.edu/news/media/k2/items/cache/5ba340a816c7a2f7d5d12ca399857225_XL.jpg",
+    "discount": "Special Prices",
+    "expiryDate": "2023-11-30"
+  }
+]

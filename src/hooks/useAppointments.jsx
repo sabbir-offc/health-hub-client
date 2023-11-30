@@ -12,7 +12,6 @@ const useAppointments = () => {
     queryKey: ["appointments", user],
     queryFn: async () => {
       const { data } = await axiosSecure(`/appointments/${user?.email}`);
-      console.log(data);
       return data;
     },
   });

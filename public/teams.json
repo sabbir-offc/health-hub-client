@@ -1,37 +1,37 @@
 [
   {
     "id": 1,
-    "name": "Alice Johnson",
-    "role": "Event Coordinator",
+    "name": "Dr. Alice Johnson",
+    "role": "Diagnostic Specialist",
     "image": "https://i.ibb.co/W3TFvF2/alexander-hipp-i-EEBWg-Y-6l-A-unsplash.jpg",
-    "details": "Alice ensures that every event is a memorable experience. Her creativity and attention to detail make each occasion special. She loves bringing people together through the magic of events."
+    "details": "Dr. Alice specializes in diagnostics, ensuring accurate and timely assessments. Her commitment to precision and patient care makes her an invaluable member of our team."
   },
   {
     "id": 2,
-    "name": "John Smith",
-    "role": "Conference Organizer",
+    "name": "Dr. John Smith",
+    "role": "Radiology Expert",
     "image": "https://i.ibb.co/5RHkTjV/alex-suprun-ZHv-M3-XIOHo-E-unsplash.jpg",
-    "details": "John specializes in organizing corporate conferences. His dedication to creating a seamless experience for attendees and speakers alike has earned him recognition in the industry."
+    "details": "Dr. John is our resident radiology expert. His expertise in interpreting medical images plays a crucial role in providing comprehensive diagnostic services to our patients."
   },
   {
     "id": 3,
     "name": "Emily Davis",
-    "role": "Wedding Planner",
+    "role": "Patient Care Coordinator",
     "image": "https://i.ibb.co/W3TFvF2/alexander-hipp-i-EEBWg-Y-6l-A-unsplash.jpg",
-    "details": "Emily turns dreams into reality with her wedding planning expertise. Her meticulous planning ensures that every detail is perfect, making couples' special days truly magical."
+    "details": "Emily is dedicated to ensuring a seamless and supportive experience for our patients. Her role involves coordinating appointments and addressing patient inquiries with empathy and efficiency."
   },
   {
     "id": 4,
     "name": "Michael Wilson",
-    "role": "Concert Coordinator",
+    "role": "Lab Services Manager",
     "image": "https://i.ibb.co/5RHkTjV/alex-suprun-ZHv-M3-XIOHo-E-unsplash.jpg",
-    "details": "Michael has a passion for bringing music to life. While he appreciates great performances, he's also focused on enhancing crowd management for a smoother and more enjoyable concert experience."
+    "details": "Michael oversees our laboratory services, ensuring accurate testing and timely results. His commitment to quality contributes to the reliability of our diagnostic procedures."
   },
   {
     "id": 5,
     "name": "Sophia Clark",
-    "role": "Wellness Retreat Organizer",
+    "role": "Health and Wellness Consultant",
     "image": "https://i.ibb.co/pXbTsts/jake-nackos-IF9-TK5-Uy-KI-unsplash.jpg",
-    "details": "Sophia specializes in organizing wellness retreats that offer a rejuvenating escape. Her events provide a perfect balance of relaxation and self-discovery, leaving participants refreshed and inspired."
+    "details": "Sophia specializes in promoting holistic health and wellness. She provides valuable insights to our patients, emphasizing the importance of overall well-being in conjunction with diagnostics."
   }
 ]

@@ -87,3 +87,9 @@ export const updateReservationStatus = async (id, result) => {
     const { data } = await axiosSecure.patch(`/reservation/result/${id}`, result);
     return data;
 }
+
+//get all recommendations
+export const getAllRecommendations = async () => {
+    const { data } = await axiosSecure('/recommendations');
+    return data;
+}

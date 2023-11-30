@@ -11,10 +11,10 @@ const useAllTests = ({ sortField } = {}) => {
     queryFn: async () => {
       if (sortField) {
         const res = await getAllTests(sortField);
-        return res;
+        return res.result;
       } else {
         const res = await getAllTests();
-        return res;
+        return res.result;
       }
     },
   });

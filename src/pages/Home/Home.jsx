@@ -5,6 +5,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import FeaturedTest from "./Tests/FeaturedTest";
 import Promotion from "./Promotion/Promotion";
 import Team from "./Team/Team";
+import Recommendation from "./Recommendation/Recommendation";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
           <Divider />
           <FeaturedTest />
           <Promotion />
+          <Recommendation />
           <Team />
         </Box>
       </Container>

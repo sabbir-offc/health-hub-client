@@ -16,6 +16,13 @@ const AppointmentLists = ({
   const testDate = new Date(date);
   const modifiedDate = testDate.toLocaleDateString("en-GB");
 
+  const formattedTime = testDate.toLocaleTimeString("en-US", {
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZone: "UTC",
+  });
   return (
     <TableRow
       key={title}
@@ -25,12 +32,18 @@ const AppointmentLists = ({
         {title}
       </TableCell>
       <TableCell align="right">{modifiedDate}</TableCell>
-      <TableCell
-        align="right"
-        sx={{ textTransform: "uppercase", color: "green" }}
-      >
-        {status}
-      </TableCell>
+      {location.pathname === "/dashboard/my-appointments" ? (
+        <TableCell align="right" sx={{ textTransform: "uppercase" }}>
+          {formattedTime}
+        </TableCell>
+      ) : (
+        <TableCell
+          align="right"
+          sx={{ textTransform: "uppercase", color: "green" }}
+        >
+          {status}
+        </TableCell>
+      )}
       <TableCell align="right">
         {location.pathname === "/dashboard/my-appointments" ? (
           <Button

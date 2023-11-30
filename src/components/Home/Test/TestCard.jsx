@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {  Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ const TestCard = ({ test }) => {
   const modifiedDate = testDate.toLocaleDateString("en-GB");
   return (
     <Grid item>
-      <Card sx={{ maxWidth: "290px" }}>
+      <Card>
         <CardMedia sx={{ height: 140 }} image={image} title={title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
