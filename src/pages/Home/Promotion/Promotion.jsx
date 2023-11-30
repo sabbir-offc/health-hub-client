@@ -49,7 +49,17 @@ const Promotion = () => {
                     <Typography>Discount: {card.discount}</Typography>
                     <Typography>ExpireDate: {card.expiryDate}</Typography>
                   </Box>
-                  <Button size="small" color="primary"></Button>
+                  <br></br>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      display: "block",
+                      ml: "10px",
+                    }}
+                  >
+                    See More
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>

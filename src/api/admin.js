@@ -16,6 +16,13 @@ export const updateBannerStatus = async (id, status) => {
 }
 
 
+//delete a banner
+export const deleteBanner = async (id) => {
+    const { data } = await axiosSecure.delete(`/banners/${id}`);
+    return data;
+}
+
+
 //add test
 export const addTest = async (testInfo) => {
     const { data } = await axiosSecure.post('/tests', testInfo);

@@ -17,7 +17,6 @@ const AllTests = () => {
 
   if (isLoading) return <Loader />;
   const handleDelete = async (id) => {
-    console.log("delete this", id);
     const res = await deleteTest(id);
     if (res.deletedCount > 0) {
       refetch();

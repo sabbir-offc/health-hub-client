@@ -19,6 +19,9 @@ import UpcomingAppointments from "../pages/Dashboard/User/UpcomingAppointments";
 import TestReservation from "../pages/Dashboard/Admin/Tests/TestReservation";
 import AllTestPage from "../pages/Home/Tests/AllTest/AllTestPage";
 import TestResult from "../pages/Dashboard/User/TestResult";
+import About from "../pages/AboutUs/About";
+import Contact from "../pages/Contact/Contact";
+import HealthHub from "../pages/Health Hub/HealthHub";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/health-hub",
+        element: <HealthHub />,
       },
       {
         path: "tests",

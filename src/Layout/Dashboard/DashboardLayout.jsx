@@ -1,12 +1,20 @@
 import Box from "@mui/material/Box";
 
 import Toolbar from "@mui/material/Toolbar";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../../components/Dashboard/Sidebar";
+import useUserInfo from "../../hooks/useUserInfo";
+import Loader from "../../components/Loader";
 
 const drawerWidth = 240;
 
 const DashboardLayout = () => {
+  const { userInfo, isLoading } = useUserInfo();
+
+  if (isLoading) return <Loader />;
+  if (userInfo?.status === "blocked") {
+    return <Navigate to="/login" />;
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <Sidebar />

@@ -1,5 +1,5 @@
 import { Button, Divider, Grid, Paper, Typography } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import BookingModal from "../../../components/Modal/BookingModal";
 import { useEffect, useState } from "react";
 import useBanner from "../../../hooks/useBanner";
@@ -7,15 +7,18 @@ import Loader from "../../../components/Loader";
 import useAuth from "../../../hooks/useAuth";
 import WebTitle from "../../../components/WebTitle/WebTitle";
 import toast from "react-hot-toast";
+import useUserInfo from "../../../hooks/useUserInfo";
 
 const TestDetails = () => {
   const test = useLoaderData();
+  const { userInfo } = useUserInfo();
   const { title, details, date, image, price, slots, _id } = test;
   const [open, setOpen] = useState(false);
   const [banner, setBanner] = useState(null);
   const { banners, isLoading } = useBanner();
   const [discountRate, setDiscountRate] = useState(null);
   const [appointmentInfo, setAppointmentInfo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   const { user } = useAuth();
   const handleClose = () => {
     setOpen(false);
@@ -36,7 +39,10 @@ const TestDetails = () => {
     if (banners) {
       banners?.find((banner) => banner.isActive === true && setBanner(banner));
     }
-  }, [banners]);
+    if (userInfo?.status === "blocked") {
+      setDisabled(true);
+    }
+  }, [banners, userInfo]);
   const dbDate = new Date(date);
   const modifiedDate = dbDate.toLocaleDateString("en-GB");
 
@@ -93,7 +99,7 @@ const TestDetails = () => {
               Date: {modifiedDate}
             </Typography>
             <Typography variant="h5" fontWeight={400}>
-              Price: {price}
+              Price: ${price}
             </Typography>
             <Typography variant="h5" fontWeight={400}>
               Slots Left: {slots}
@@ -101,7 +107,7 @@ const TestDetails = () => {
             <Button
               variant="contained"
               onClick={handleOpenModal}
-              disabled={slots < 1}
+              disabled={slots < 1 || disabled}
               sx={{ my: "10px", backgroundColor: "#FF5722" }}
             >
               Book Now

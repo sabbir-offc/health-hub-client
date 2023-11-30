@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 const SkeletonLoading = () => {
   const data = [1, 2, 3, 4, 5, 6, 7];
   return (
-    <Grid container gap={"16px"}>
+    <Grid container gap={"16px"} py={10}>
       {data.map((n) => (
         <Grid item key={n}>
           <Skeleton variant="rectangular" width={230} height={140} />

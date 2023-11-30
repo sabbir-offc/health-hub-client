@@ -8,10 +8,11 @@ import Paper from "@mui/material/Paper";
 import useBanner from "../../../hooks/useBanner";
 import { Avatar, Button } from "@mui/material";
 import Loader from "../../../components/Loader";
-import { updateBannerStatus } from "../../../api/admin";
+import { deleteBanner, updateBannerStatus } from "../../../api/admin";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import WebTitle from "../../../components/WebTitle/WebTitle";
+import Swal from "sweetalert2";
 const BannerList = () => {
   const { banners, isLoading, refetch } = useBanner();
   const [loading, setLoading] = useState(false);
@@ -48,6 +49,30 @@ const BannerList = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Delete!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteBanner(id);
+        if (res.deletedCount > 0) {
+          refetch();
+          return Swal.fire({
+            title: "Deleted!",
+            text: "Your Selected Banner has been cancelled.",
+            icon: "success",
+          });
+        }
+      }
+    });
+  };
+
   return (
     <>
       <WebTitle title={"All Banner"} />
@@ -62,6 +87,7 @@ const BannerList = () => {
               <TableCell align="left">Banner Title</TableCell>
               <TableCell align="right">Coupon Code</TableCell>
               <TableCell align="right">Discount Rate</TableCell>
+              <TableCell align="right">Delete</TableCell>
               <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -79,6 +105,15 @@ const BannerList = () => {
                 </TableCell>
                 <TableCell align="right">{row.coupon}</TableCell>
                 <TableCell align="right">{row.discountRate}</TableCell>
+                <TableCell align="right">
+                  <Button
+                    onClick={() => handleDelete(row._id)}
+                    variant="outlined"
+                    color="error"
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
                 <TableCell align="right">
                   {row?.isActive === true ? (
                     <Button

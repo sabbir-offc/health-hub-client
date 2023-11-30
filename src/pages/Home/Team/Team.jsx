@@ -12,7 +12,7 @@ const Team = () => {
         </Typography>
         <Box>
           <Swiper
-            slidesPerView={3}
+            slidesPerView={2}
             spaceBetween={30}
             loop={true}
             autoplay={true}

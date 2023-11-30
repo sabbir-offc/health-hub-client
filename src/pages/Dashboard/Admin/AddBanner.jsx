@@ -15,10 +15,12 @@ import toast from "react-hot-toast";
 import { imageUpload } from "../../../api/imageUpload";
 import { uploadBanner } from "../../../api/admin";
 import WebTitle from "../../../components/WebTitle/WebTitle";
+import { useNavigate } from "react-router-dom";
 const AddBanner = () => {
   const [imgBtnText, setImgBtnText] = useState("Upload Banner Image");
   const [selectedImg, setSelectedImg] = useState(undefined);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   //hook form
   const {
     register,
@@ -47,9 +49,10 @@ const AddBanner = () => {
       const res = await uploadBanner(bannerInfo).then();
       if (res.acknowledged) {
         toast.success("Banner Uploaded Successfully");
+        navigate("/dashboard/banners");
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

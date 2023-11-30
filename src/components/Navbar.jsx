@@ -13,11 +13,17 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
+import useUserInfo from "../hooks/useUserInfo";
 
 const Navbar = () => {
+  const { userInfo } = useUserInfo();
+
   const pages = [
     { name: "Home", to: "/" },
     { name: "All Test", to: "/tests" },
+    { name: "About Us", to: "/about" },
+    { name: "Contact Us", to: "/contact" },
+    { name: "Health Hub", to: "/health-hub" },
   ];
   const { user, logOut } = useAuth();
   const settings = [
@@ -27,7 +33,10 @@ const Navbar = () => {
     },
     {
       name: "Dashboard",
-      to: "/dashboard/all-tests",
+      to:
+        userInfo?.role === "admin"
+          ? "/dashboard/all-tests"
+          : "/dashboard/my-appointments",
     },
   ];
   const [anchorElNav, setAnchorElNav] = useState(null);

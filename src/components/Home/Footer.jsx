@@ -8,6 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -18,6 +19,7 @@ const Footer = () => {
         bgcolor: "white",
         py: 5,
         mt: 8,
+        mx: "auto",
       }}
     >
       <Grid
@@ -29,6 +31,7 @@ const Footer = () => {
           display={"flex"}
           justifyContent="center"
           alignItems="center"
+          textAlign={"center"}
           sx={{ flexWrap: "wrap", m: -4 }}
         >
           <Box width="auto" p="8px">
@@ -43,61 +46,38 @@ const Footer = () => {
             <List
               sx={{
                 display: "flex",
-
                 alignItems: "center",
               }}
             >
               <ListItem sx={{ p: -5 }} className="p-5">
-                <ListItemText
-                  sx={{
-                    fontWeight: 500,
-                    color: "gray",
-                    "&:hover": {
-                      color: "black",
-                    },
-                  }}
-                >
-                  Privacy Policy
-                </ListItemText>
+                <Link style={{ textDecoration: "none" }} to={"/about"}>
+                  <ListItemText
+                    sx={{
+                      fontWeight: 500,
+                      color: "gray",
+                      "&:hover": {
+                        color: "black",
+                      },
+                    }}
+                  >
+                    About Us
+                  </ListItemText>
+                </Link>
               </ListItem>
               <ListItem sx={{ p: -5 }} className="p-5">
-                <ListItemText
-                  sx={{
-                    fontWeight: 500,
-                    color: "gray",
-                    "&:hover": {
-                      color: "black",
-                    },
-                  }}
-                >
-                  Privacy Policy
-                </ListItemText>
-              </ListItem>
-              <ListItem sx={{ p: -5 }} className="p-5">
-                <ListItemText
-                  sx={{
-                    fontWeight: 500,
-                    color: "gray",
-                    "&:hover": {
-                      color: "black",
-                    },
-                  }}
-                >
-                  Privacy Policy
-                </ListItemText>
-              </ListItem>
-              <ListItem sx={{ p: -5 }} className="p-5">
-                <ListItemText
-                  sx={{
-                    fontWeight: 500,
-                    color: "gray",
-                    "&:hover": {
-                      color: "black",
-                    },
-                  }}
-                >
-                  Privacy Policy
-                </ListItemText>
+                <Link style={{ textDecoration: "none" }} to={"/contact"}>
+                  <ListItemText
+                    sx={{
+                      fontWeight: 500,
+                      color: "gray",
+                      "&:hover": {
+                        color: "black",
+                      },
+                    }}
+                  >
+                    Contact Us
+                  </ListItemText>
+                </Link>
               </ListItem>
             </List>
           </Box>
