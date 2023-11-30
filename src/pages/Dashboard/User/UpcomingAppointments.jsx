@@ -17,6 +17,7 @@ import EmptyState from "../../../components/Home/EmptyState";
 
 const UpcomingAppointments = () => {
   const { appointments, isLoading, refetch } = useAppointments();
+
   if (isLoading) return <Loader />;
 
   const handleCancel = async (id) => {
@@ -60,13 +61,15 @@ const UpcomingAppointments = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {appointments?.map((appointment) => (
-                <AppointmentLists
-                  key={appointment._id}
-                  appointment={appointment}
-                  handleCancel={handleCancel}
-                />
-              ))}
+              {appointments
+                .filter((appointment) => appointment?.status === "pending")
+                .map((filteredAppointment) => (
+                  <AppointmentLists
+                    key={filteredAppointment._id}
+                    appointment={filteredAppointment}
+                    handleCancel={handleCancel}
+                  />
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
