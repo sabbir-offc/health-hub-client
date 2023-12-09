@@ -35,7 +35,7 @@ Explore the Health Hub Management System live: [Health Hub](https://diagnostic-c
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/programming-hero-web-course1/b8a12-client-side-sabbir-offc`
+1. Clone the repository: `git clone https://github.com/sabbir-offc/health-hub-client`
 2. Install dependencies: `npm install`
 3. Run the application: `npm start`
 
