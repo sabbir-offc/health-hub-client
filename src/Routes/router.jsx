@@ -24,6 +24,7 @@ import Contact from "../pages/Contact/Contact";
 import HealthHub from "../pages/Health Hub/HealthHub";
 import ErrorPage from "../pages/Error/Error";
 import BlockPage from "../pages/BlockPage/BlockPage";
+import MakePrescription from "../pages/MakePrescription/MakePrescription";
 
 const router = createBrowserRouter([
   {
@@ -45,12 +46,16 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/health-hub",
+        path: "health-hub",
         element: <HealthHub />,
       },
       {
         path: "tests",
         element: <AllTestPage />,
+      },
+      {
+        path: "make-prescription",
+        element: <MakePrescription />,
       },
       {
         path: "test/:id",

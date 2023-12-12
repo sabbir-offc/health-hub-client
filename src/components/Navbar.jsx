@@ -24,6 +24,7 @@ const Navbar = () => {
     { name: "About Us", to: "/about" },
     { name: "Contact Us", to: "/contact" },
     { name: "Health Hub", to: "/health-hub" },
+    { name: "Generate E-Prescription", to: "/make-prescription" },
   ];
   const { user, logOut } = useAuth();
   const settings = [
