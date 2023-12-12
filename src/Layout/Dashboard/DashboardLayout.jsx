@@ -1,13 +1,10 @@
 import Box from "@mui/material/Box";
-
 import Toolbar from "@mui/material/Toolbar";
 import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../../components/Dashboard/Sidebar";
 import useUserInfo from "../../hooks/useUserInfo";
 import Loader from "../../components/Loader";
-
 const drawerWidth = 240;
-
 const DashboardLayout = () => {
   const { userInfo, isLoading } = useUserInfo();
 

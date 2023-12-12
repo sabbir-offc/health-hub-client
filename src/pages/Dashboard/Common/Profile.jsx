@@ -1,6 +1,5 @@
 import Paper from "@mui/material/Paper";
 import { Avatar, Box, Button, Grid, Typography } from "@mui/material";
-
 import useAuth from "../../../hooks/useAuth";
 import useUserInfo from "../../../hooks/useUserInfo";
 import { useState } from "react";

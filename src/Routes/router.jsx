@@ -23,6 +23,7 @@ import About from "../pages/AboutUs/About";
 import Contact from "../pages/Contact/Contact";
 import HealthHub from "../pages/Health Hub/HealthHub";
 import ErrorPage from "../pages/Error/Error";
+import BlockPage from "../pages/BlockPage/BlockPage";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+
       {
         path: "/contact",
         element: <Contact />,
@@ -68,6 +70,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/block",
+    element: <BlockPage />,
   },
   {
     path: "/dashboard",

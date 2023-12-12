@@ -2,7 +2,6 @@ import Avatar from "@mui/material/Avatar";
 import LoginAnimation from "../../../public/Animation/login.json";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -70,7 +69,6 @@ const Login = () => {
             sx={{
               my: 8,
               mx: 4,
-
               display: "flex",
               flexDirection: "column",
               alignItems: "center",

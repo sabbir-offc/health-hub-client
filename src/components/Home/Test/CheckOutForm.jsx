@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import "../../../checkoutForm.css";

@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-
 import Typography from "@mui/material/Typography";
 import { Avatar, CardActionArea, CardActions, Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +16,6 @@ import WebTitle from "../../../components/WebTitle/WebTitle";
 
 const Users = () => {
   const [loading, setLoading] = useState(false);
-
   const {
     data: users,
     isLoading,
@@ -30,7 +28,6 @@ const Users = () => {
     },
   });
   if (isLoading) return <Loader />;
-
   const handleBlock = async (id) => {
     const status = "blocked";
     try {
@@ -48,7 +45,6 @@ const Users = () => {
   };
   const handleActive = async (id) => {
     const status = "active";
-
     try {
       const res = await updateUserStatus(id, status);
       if (res.modifiedCount > 0) {

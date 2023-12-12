@@ -19,13 +19,11 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ImSpinner5 } from "react-icons/im";
 import useAuth from "../../hooks/useAuth";
-//json file for districts and upazillas
 
 import { imageUpload } from "../../api/imageUpload";
 import { saveUser } from "../../api/auth";
 import toast from "react-hot-toast";
 import WebTitle from "../../components/WebTitle/WebTitle";
-
 import Loader from "../../components/Loader";
 import useGeoLocation from "../../hooks/useGeoLocation";
 const Register = () => {

@@ -28,7 +28,6 @@ const TestDetails = () => {
 
   const handleOpenModal = () => {
     if (slots > 0) return setOpen(true);
-
     return toast.error(
       "All slots are booked, Please try again in few days later."
     );
